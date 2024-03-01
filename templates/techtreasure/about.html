@@ -1,0 +1,17 @@
+{% extends 'techtreasure/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    FAQ's
+{% endblock %}
+
+{% block body_block %}
+    <h1>techtreasure</h1>
+    <div>
+        here is the about page.<br />
+        <strong>{{ boldmessage }}</strong><br />
+    </div>
+    <div>
+        <a href="{% url 'techtreasure:index' %}">Index</a><br />
+    </div>
+{% endblock %}
