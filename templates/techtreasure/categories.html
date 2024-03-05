@@ -1,0 +1,16 @@
+{% extends 'techtreasure/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Categories
+{% endblock %}
+
+{% block body_block %}
+    <div> 
+        <a href="{% url 'techtreasure:searchlistings' %}">Search Listings</a>
+    </div>
+    <div>
+        <h1>Categories</h1>
+    </div>    
+{% endblock %}
+

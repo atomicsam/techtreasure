@@ -4,13 +4,19 @@
 <html>
     <head>
         <title>
-            Rango -
+            techtreasure -
             {% block title_block %}
-                How to Tango with Django!
+                tech turned treasure
             {% endblock %}
         </title>
     </head>
     <body>
+        <div>
+            <h2>techtreasure</h2>
+            <li><a href="{% url 'techtreasure:faqs' %}">FAQ's</a></li>
+            <li><a href="{% url 'techtreasure:index' %}">Index</a></li>  
+        </div>
+        <hr />
         <div>
             {% block body_block %}
             {% endblock %}
@@ -21,7 +27,7 @@
         <hr />
         <div>
             <ul>
-                <li><a href="{% url 'techtreasure:about' %}">About</a></li>
+                <li><a href="{% url 'techtreasure:faqs' %}">FAQ's</a></li>
                 <li><a href="{% url 'techtreasure:index' %}">Index</a></li>         
             </ul>
         </div>

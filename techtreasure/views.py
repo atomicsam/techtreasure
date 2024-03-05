@@ -9,7 +9,7 @@ def index(request):
     response = render(request, 'techtreasure/index.html', context=context_dict)
     return response
 
-def about(request):
+def faqs(request):
 
     context_dict = {}
     context_dict['boldmessage'] = 'Crunchy, creamy, cookie, candy, cupcake!'
