@@ -14,21 +14,20 @@
         <div>
             <h2>techtreasure</h2>
             <li><a href="{% url 'techtreasure:faqs' %}">FAQ's</a></li>
-            <li><a href="{% url 'techtreasure:index' %}">Index</a></li>  
+            <li><a href="{% url 'techtreasure:home' %}">Home</a></li>
+            <li><a href="{% url 'techtreasure:signup' %}">Sign Up</a></li>
+            <li><a href="{% url 'techtreasure:login' %}">Login</a></li>
         </div>
         <hr />
         <div>
             {% block body_block %}
             {% endblock %}
         </div>
-        <div>
-
-        </div>
         <hr />
         <div>
             <ul>
-                <li><a href="{% url 'techtreasure:faqs' %}">FAQ's</a></li>
-                <li><a href="{% url 'techtreasure:index' %}">Index</a></li>         
+                <li><a href="{% url 'techtreasure:home' %}">Home</a></li>   
+                <li><a href="{% url 'techtreasure:faqs' %}#aboutus">Contact Us</a></li>      
             </ul>
         </div>
     </body>
