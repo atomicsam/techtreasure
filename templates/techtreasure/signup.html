@@ -8,5 +8,21 @@
 {% block body_block %}
     <div>
         <h1>sign up</h1>
+        <div id="userdetails">
+            <h2>user details</h2>
+            <div>
+                FORM PLACEHOLDER
+            </div>
+        </div>
+        <div>
+            <h2>personal details</h2>
+            <div>
+                PERSONAL DETAILS PLACEHOLDER
+            </div>
+        </div>
+        <div>
+            <p>Already have an account?</p>
+            <a href="{% url 'techtreasure:login' %}">Login</a>
+        </div>
     </div>
 {% endblock %}

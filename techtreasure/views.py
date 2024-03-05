@@ -40,3 +40,11 @@ def login(request):
     
     response = render(request, 'techtreasure/login.html', context=context_dict)
     return response
+
+def searchlistings(request):
+
+    context_dict = {}
+    context_dict['boldmessage'] = 'Crunchy, creamy, cookie, candy, cupcake!'
+    
+    response = render(request, 'techtreasure/searchlistings.html', context=context_dict)
+    return response
