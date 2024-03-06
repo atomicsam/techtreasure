@@ -1,12 +1,15 @@
 from django.shortcuts import render
+from django.db.models import Count
 from techtreasure.models import Category, Listing, User, Offer
 
 # Create your views here.
 def home(request):
-    category_list = Category.objects.order_by('-views')[:4]
-
+    category_list = Category.objects.annotate(number_of_listings=Count('listing')).order_by('-number_of_listings')[:4]
+    recent_listings = Listing.objects.order_by('-creation_date')[:4]
+    
     context_dict = {}
     context_dict['categories'] = category_list
+    context_dict['listings'] = recent_listings
     
     response = render(request, 'techtreasure/home.html', context=context_dict)
     return response
@@ -20,7 +23,7 @@ def faqs(request):
     return response
 
 def categories(request):
-    category_list = Category.objects.order_by('-views')[:4]
+    category_list = Category.objects.order_by('name')
     context_dict = {}
     
     context_dict['categories'] = category_list

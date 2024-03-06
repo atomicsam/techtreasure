@@ -4,7 +4,6 @@ from django.db import models
 class Category(models.Model):
     name = models.CharField(max_length=128, unique=True)
     views = models.IntegerField(default=0)
-    image = models.ImageField()
 
     class Meta:
         verbose_name_plural = 'Categories'
@@ -24,11 +23,12 @@ class User(models.Model):
 class Listing(models.Model):
     # already exists in django
     #listingid = models.IntegerField(unique=True)
-    picturefield = models.ImageField()
-    suggestedprice = models.DecimalField(max_digits=5, decimal_places=2)
+    picture_field = models.ImageField()
+    suggested_price = models.DecimalField(max_digits=5, decimal_places=2)
     itemsold = models.BooleanField()
-    descriptionfield = models.CharField(max_length=500)
-    numofviews = models.IntegerField(unique=True)
+    creation_date = models.DateTimeField()
+    description_field = models.CharField(max_length=500)
+    num_of_views = models.IntegerField(unique=True)
     location = models.CharField(max_length=100)
     categories = models.ForeignKey(Category, on_delete=models.CASCADE)
 
@@ -39,7 +39,7 @@ class Offer(models.Model):
     # as stated before
     # offerid = models.IntegerField(unique=True)
     price = models.DecimalField(max_digits=5, decimal_places=2)
-    offerdate = models.DateField()
+    offer_date = models.DateTimeField()
     listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
     users = models.ManyToManyField(User)
 

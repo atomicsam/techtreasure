@@ -7,23 +7,32 @@ Home
 
 {% block body_block %}
     <h1>Home</h1>
-    <div>
-        <h2>Popular Categories</h2>
+    <div class="categories">
+    <h2>Popular Categories</h2>
+    {% if categories %}
+        <ul>
         {% for category in categories %}
-            <img src="{{ STATIC_URL }}{% category.name %}.png">
-            <li>{% category.name %}</li>
+            <img src="/static/{{category.name }}.png" alt="Picture of {{ category.name }}">
+            <li>{{ category.name }}</li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <strong>No categories available.</strong>
+    {% endif %}
     </div>
-
-    <div>
-        <h2>Most Viewed Categories</h2>
-    </div>
-
-    <div>
-        <h2>New Listings</h2>
-    </div>
-
-    <div>
-        <img src="{% static 'images/rango.jpg' %}" alt="Picture of Rango" />
+    
+    <div class="listings">
+    <h2>Recent Listings</h2>
+    {% if categories %}
+        <ul>
+        {% for listing in listings %}
+            <img src="/static/{{ listing.name }}.png" alt="Picture of {{ listing.name }}">
+            <li>{{ listing.name }}</li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <strong>No listings available.</strong>
+    {% endif %}
     </div>
     
 {% endblock %}
