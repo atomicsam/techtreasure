@@ -1,12 +1,14 @@
 from django.shortcuts import render
+from techtreasure.models import Category, Listing, User, Offer
 
 # Create your views here.
 def home(request):
+    category_list = Category.objects.order_by('-views')[:4]
 
     context_dict = {}
-    context_dict['boldmessage'] = 'Crunchy, creamy, cookie, candy, cupcake!'
+    context_dict['categories'] = category_list
     
-    response = render(request, 'techtreasure/index.html', context=context_dict)
+    response = render(request, 'techtreasure/home.html', context=context_dict)
     return response
 
 def faqs(request):
@@ -18,9 +20,10 @@ def faqs(request):
     return response
 
 def categories(request):
-
+    category_list = Category.objects.order_by('-views')[:4]
     context_dict = {}
-    context_dict['boldmessage'] = 'Crunchy, creamy, cookie, candy, cupcake!'
+    
+    context_dict['categories'] = category_list
     
     response = render(request, 'techtreasure/categories.html', context=context_dict)
     return response
