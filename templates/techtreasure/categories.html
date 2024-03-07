@@ -5,17 +5,20 @@
     Categories
 {% endblock %}
 
+{% block heading_block %}
+    All Categories
+{% endblock %}
+
 {% block body_block %}
     <div> 
         <a href="{% url 'techtreasure:searchlistings' %}">Search Listings</a>
         <a href="/rango/add_category/">Add a New Listing </a><br />
     </div>
     <div class="categories">
-        <h2>All Categories</h2>
         {% if categories %}
             <ul>
             {% for category in categories %}
-                <img src="/static/{{ category.name }}.png" alt="Picture of {{ category.name }}">
+                <img class="img-fluid" src="/static/{{ category.name }}.png" alt="Picture of {{ category.name }}">
                 <li><a href="{% url 'techtreasure:show_category' category.slug %}">{{ category.name }}</a></li>
             {% endfor %}
             </ul>

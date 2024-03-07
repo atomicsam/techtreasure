@@ -19,8 +19,6 @@ class Category(models.Model):
         return self.name
     
 class Listing(models.Model):
-    # already exists in django
-    #listingid = models.IntegerField(unique=True)
     name = models.CharField(max_length=50)
     picture_field = models.ImageField()
     suggested_price = models.DecimalField(max_digits=5, decimal_places=2)
@@ -35,8 +33,6 @@ class Listing(models.Model):
         return self.name
 
 class Offer(models.Model):
-    # as stated before
-    # offerid = models.IntegerField(unique=True)
     price = models.DecimalField(max_digits=5, decimal_places=2)
     offer_date = models.DateTimeField()
     listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
