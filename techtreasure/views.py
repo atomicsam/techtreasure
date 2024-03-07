@@ -31,6 +31,21 @@ def categories(request):
     response = render(request, 'techtreasure/categories.html', context=context_dict)
     return response
 
+def show_category(request, category_name_slug):
+    context_dict = {}
+
+    try:
+        category = Category.objects.get(slug=category_name_slug)
+        listings = Listing.objects.filter(category=category)
+        context_dict['listings'] = listings
+        context_dict['category'] = category
+    except Category.DoesNotExist:
+        context_dict['category'] = None
+        context_dict['listings'] = None
+    
+    response = render(request, 'techtreasure/categories.html', context=context_dict)
+    return response
+
 def signup(request):
 
     context_dict = {}

@@ -1,9 +1,15 @@
 from django.db import models
+from django.template.defaultfilters import slugify
 
 # Create your models here.
 class Category(models.Model):
     name = models.CharField(max_length=128, unique=True)
     views = models.IntegerField(default=0)
+    slug = models.SlugField(unique=True)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super(Category, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name_plural = 'Categories'
@@ -23,12 +29,13 @@ class User(models.Model):
 class Listing(models.Model):
     # already exists in django
     #listingid = models.IntegerField(unique=True)
+    name = models.CharField(max_length=50)
     picture_field = models.ImageField()
     suggested_price = models.DecimalField(max_digits=5, decimal_places=2)
     itemsold = models.BooleanField()
     creation_date = models.DateTimeField()
     description_field = models.CharField(max_length=500)
-    num_of_views = models.IntegerField(unique=True)
+    num_of_views = models.IntegerField(default=0)
     location = models.CharField(max_length=100)
     categories = models.ForeignKey(Category, on_delete=models.CASCADE)
 

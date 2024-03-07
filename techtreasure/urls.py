@@ -9,5 +9,6 @@ urlpatterns = [
     path('categories/', views.categories, name='categories'),
     path('signup/', views.signup, name='signup'),
     path('login/', views.login, name='login'),
-    path('searchlistings/', views.searchlistings, name='searchlistings'),
+    path('categories/searchlistings/', views.searchlistings, name='searchlistings'),
+    path('categories/<slug:category_name_slug>/', views.show_category, name='show_category'),
 ]

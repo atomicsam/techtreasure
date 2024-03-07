@@ -26,7 +26,7 @@ Home
     {% if categories %}
         <ul>
         {% for listing in listings %}
-            <img src="/static/{{ listing.name }}.png" alt="Picture of {{ listing.name }}">
+            <img src="{{ MEDIA_URL }}{{ listing.picture_field }}" alt="Picture of {{ listing.name }}">
             <li>{{ listing.name }}</li>
         {% endfor %}
         </ul>

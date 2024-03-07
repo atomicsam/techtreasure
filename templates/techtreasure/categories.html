@@ -15,7 +15,7 @@
             <ul>
             {% for category in categories %}
                 <img src="/static/{{ category.name }}.png" alt="Picture of {{ category.name }}">
-                <li>{{ category.name }}</li>
+                <li><a href="/techtreasure/categories/{{ category.slug }}/">{{ category.name }}</a></li>
             {% endfor %}
             </ul>
         {% else %}
