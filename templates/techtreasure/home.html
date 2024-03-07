@@ -2,17 +2,20 @@
 {% load staticfiles %}
 
 {% block title_block %}
-Home
+    Home
+{% endblock %}
+
+{% block heading_block %}
+    Home
 {% endblock %}
 
 {% block body_block %}
-    <h1>Home</h1>
     <div class="categories">
     <h2>Popular Categories</h2>
     {% if categories %}
         <ul>
         {% for category in categories %}
-            <img src="/static/{{category.name }}.png" alt="Picture of {{ category.name }}">
+            <a href="{% url 'techtreasure:show_category' category.slug %}"><img id="listing" class="img-fluid" src="/static/{{ category.name }}.svg" alt="Picture of {{ category.name }}"></a>
             <li><a href="{% url 'techtreasure:show_category' category.slug %}">{{ category.name }}</a></li>
         {% endfor %}
         </ul>
@@ -26,7 +29,7 @@ Home
     {% if categories %}
         <ul>
         {% for listing in listings %}
-            <img src="{{ MEDIA_URL }}{{ listing.picture_field }}" alt="Picture of {{ listing.name }}">
+            <img id="listing" class="img-thumbnail" src="{{ MEDIA_URL }}{{ listing.picture_field }}" alt="Picture of {{ listing.name }}">
             <li>{{ listing.name }}</li>
         {% endfor %}
         </ul>

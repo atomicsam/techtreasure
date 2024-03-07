@@ -5,14 +5,17 @@
     {{ category.name }}'s
 {% endblock %}
 
+{% block heading_block %}
+    {{ category.name }}
+{% endblock %}
+
 {% block body_block %}
     <div>
         {% if category %}
-            <h1>{{ category.name }}</h1>
             {% if listings %}
             <ul>
                 {% for listing in listings %}
-                <li><a href="{% url 'techtreasure:show_category' category.slug %}/{{ listing.id }}">{{ listing.name }}</a></li>
+                <li><a href="{% url 'techtreasure:show_category' category.slug %}{{ listing.id }}/">{{ listing.name }}</a></li>
                 {% endfor %}
         </ul>
             {% else %}
