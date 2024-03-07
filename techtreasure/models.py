@@ -1,5 +1,6 @@
 from django.db import models
 from django.template.defaultfilters import slugify
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Category(models.Model):
@@ -14,15 +15,6 @@ class Category(models.Model):
     class Meta:
         verbose_name_plural = 'Categories'
 
-    def __str__(self):
-        return self.name
-    
-class User(models.Model):
-    username = models.CharField(max_length=50, unique=True)
-    forename = models.CharField(max_length=50)
-    surname = models.CharField(max_length=50)
-    password = models.CharField(max_length=25)
-    
     def __str__(self):
         return self.name
     
