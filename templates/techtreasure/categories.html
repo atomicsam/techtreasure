@@ -1,5 +1,6 @@
 {% extends 'techtreasure/base.html' %}
 {% load staticfiles %}
+{% load templatetags %}
 
 {% block title_block %}
     Categories
@@ -15,7 +16,7 @@
             <ul>
             {% for category in categories %}
                 <img src="/static/{{ category.name }}.png" alt="Picture of {{ category.name }}">
-                <li><a href="/techtreasure/categories/{{ category.slug }}/">{{ category.name }}</a></li>
+                <li><a href="{% url 'techtreasure:show_category' category.slug %}">{{ category.name }}</a></li>
             {% endfor %}
             </ul>
         {% else %}

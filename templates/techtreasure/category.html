@@ -8,12 +8,14 @@
 {% block body_block %}
     <div>
     {% if category %}
+        {{% for category in categories %}}
+            {{% if category}}
         <h1>{{ category.name }}</h1>
         {% if pages %}
         <ul>
             {% for listing in listings %}
-            <li><a href="/techtreasure/categories/{{ category.slug }}/{{ listing.id }}">{{ listing.name }}</a></li>
-            {% endfor %}
+            <li><a href="{% url 'techtreasure:show_category' category.slug %}/{{ listing.id }}">{{ listing.name }}</a></li>
+        {% endfor %}
         </ul>
     </div>
 {% endblock %}
