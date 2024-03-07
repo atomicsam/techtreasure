@@ -2,20 +2,24 @@
 {% load staticfiles %}
 
 {% block title_block %}
-    Category PLACEHOLDER
+    {{ category.name }}'s
 {% endblock %}
 
 {% block body_block %}
     <div>
-    {% if category %}
-        {{% for category in categories %}}
-            {{% if category}}
-        <h1>{{ category.name }}</h1>
-        {% if pages %}
-        <ul>
-            {% for listing in listings %}
-            <li><a href="{% url 'techtreasure:show_category' category.slug %}/{{ listing.id }}">{{ listing.name }}</a></li>
-        {% endfor %}
+        {% if category %}
+            <h1>{{ category.name }}</h1>
+            {% if listings %}
+            <ul>
+                {% for listing in listings %}
+                <li><a href="{% url 'techtreasure:show_category' category.slug %}/{{ listing.id }}">{{ listing.name }}</a></li>
+                {% endfor %}
         </ul>
+            {% else %}
+            <b>There are currently no {{ category.name }} listings.</b>
+            {% endif %}
+        {% else %}
+            <b>The specified category is invalid</b>
+        {% endif %}
     </div>
 {% endblock %}

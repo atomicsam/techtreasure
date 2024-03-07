@@ -43,7 +43,7 @@ def show_category(request, category_name_slug):
         context_dict['category'] = None
         context_dict['listings'] = None
     
-    response = render(request, 'techtreasure/categories.html', context=context_dict)
+    response = render(request, 'techtreasure/category.html', context=context_dict)
     return response
 
 def signup(request):

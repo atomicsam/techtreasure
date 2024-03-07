@@ -29,7 +29,7 @@ class Listing(models.Model):
     description_field = models.CharField(max_length=500)
     num_of_views = models.IntegerField(default=0)
     location = models.CharField(max_length=100)
-    categories = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
