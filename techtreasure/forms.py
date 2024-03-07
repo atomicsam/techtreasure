@@ -1,27 +1,35 @@
 from django import forms
-from techtreasure.models import Page, Category
+from techtreasure.models import Listing, Category
 
 class CategoryForm(forms.ModelForm):
-    category = forms.CharField(max_length=128)
-    title = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
-    description = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
-    suggested_price = forms.CharField(max_length=500)
-    slug = forms.CharField(widget   =forms.HiddenInput(), required=False)
+    name = forms.CharField(max_length=128,
+                           help_text="Please enter the category name.")
+    views = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
+    likes = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
+    slug = forms.CharField(widget=forms.HiddenInput(), required=False)
 
+    # An inline class to provide additional information on the form.
     class Meta:
+        # Provide an association between the ModelForm and a model
         model = Category
         fields = ('name',)
 
-
-class MakeListingForm(forms.ModelForm):
-    category = forms.CharField(max_length=128)
-    title = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
-    description = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
-    suggested_price = forms.CharField(max_length=500)
-    location = forms.CharField(max_length=100)
+class PageForm(forms.ModelForm):
+    title = forms.CharField(max_length=128,
+                             help_text="Please enter the title of the page.")
+    url = forms.URLField(max_length=200,
+                         help_text="Please enter the URL of the page.")
+    views = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
 
     class Meta:
-        model = Page
+        # Provide an association between the ModelForm and a model
+        model = Listing
+
+        # What fields do we want to include in our form?
+        # This way we don't need every field in the model present.
+        # Some fields may allow NULL values; we may not want to include them.
+        # Here, we are hiding the foreign key.
+        # we can either exclude the category field from the form,
         exclude = ('category',)
         # or specify the fields to include (don't include the category field).
-        # fields = ('title', 'url', 'views')
+        #fields = ('title', 'url', 'views')
