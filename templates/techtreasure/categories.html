@@ -18,7 +18,7 @@
         {% if categories %}
             <ul>
             {% for category in categories %}
-                <img class="img-fluid" src="/static/{{ category.name }}.png" alt="Picture of {{ category.name }}">
+                <img class="img-fluid" src="{{ STATIC_URL }}{{ category.name }}.png" alt="Picture of {{ category.name }}">
                 <li><a href="{% url 'techtreasure:show_category' category.slug %}">{{ category.name }}</a></li>
             {% endfor %}
             </ul>

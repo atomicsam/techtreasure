@@ -11,5 +11,5 @@ urlpatterns = [
     path('login/', views.login, name='login'),
     path('categories/searchlistings/', views.searchlistings, name='searchlistings'),
     path('categories/<slug:category_name_slug>/', views.show_category, name='show_category'),
-    path('add_category/', views.add_category, name='add_category'),
+    path('404/', views.show_404, name='404'),
 ]

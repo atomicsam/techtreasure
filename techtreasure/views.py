@@ -71,23 +71,18 @@ def searchlistings(request):
     
     response = render(request, 'techtreasure/searchlistings.html', context=context_dict)
     return response
+
 def add_category(request):
     form = CategoryForm()
-    # A HTTP POST?
     if request.method == 'POST':
         form = CategoryForm(request.POST)
-        # Have we been provided with a valid form?
         if form.is_valid():
-            # Save the new category to the database.
             form.save(commit=True)
-            # Now that the category is saved, we could confirm this.
-            # For now, just redirect the user back to the index view.
             return redirect('/techtreasure/')
         else:
-            # The supplied form contained errors -
-            # just print them to the terminal.
             print(form.errors)
-    # Will handle the bad form, new form, or no form supplied cases.
-    # Render the form with error messages (if any).
-    return render(request, 'techtreasure/add_category.html', {'form': form})
 
+    return render(request, 'techtreasure/makelisting.html', {'form': form})
+
+def show_404(request):
+    return render(request, 'techtreasure/404_page.html')
