@@ -3,6 +3,7 @@ from django.db.models import Count
 from techtreasure.models import Category, Listing, User, Offer
 from techtreasure.forms import CategoryForm
 from django.shortcuts import redirect
+from django.http import HttpResponse
 
 # Create your views here.
 def home(request):
@@ -13,13 +14,19 @@ def home(request):
     context_dict['categories'] = category_list
     context_dict['listings'] = recent_listings
     
+    request.session.set_test_cookie()
+    
     response = render(request, 'techtreasure/home.html', context=context_dict)
+    response.set_cookie('favorite_color', 'blue', max_age=3600)
     return response
 
 def faqs(request):
+    
+    favorite_color = request.COOKIES.get('favorite_color', 'Not set')
 
     context_dict = {}
     context_dict['boldmessage'] = 'Crunchy, creamy, cookie, candy, cupcake!'
+    context_dict['favorite_color'] = favorite_color
     
     response = render(request, 'techtreasure/faqs.html', context=context_dict)
     return response
@@ -57,12 +64,20 @@ def signup(request):
     return response
 
 def login(request):
-
-    context_dict = {}
-    context_dict['boldmessage'] = 'Crunchy, creamy, cookie, candy, cupcake!'
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        request.session['user_name'] = username
+        
+        if request.session.test_cookie_worked():
+            print("TEST COOKIE WORKED!")
+            request.session.delete_test_cookie()
+            
+        return redirect('home')
+    else:
+        context_dict = {}
+        context_dict['boldmessage'] = 'Crunchy, creamy, cookie, candy, cupcake!'
     
-    response = render(request, 'techtreasure/login.html', context=context_dict)
-    return response
+    return render(request, 'techtreasure/login.html', context=context_dict)
 
 def searchlistings(request):
 
@@ -82,7 +97,17 @@ def add_category(request):
         else:
             print(form.errors)
 
-    return render(request, 'techtreasure/makelisting.html', {'form': form})
+def profile(request):
+    user_name = request.session.get('user_name', 'Anonymous')
+    user_email = request.session.get('user_email', 'No email provided')
+    
+    context = {
+        'user_name': user_name,
+        'user_email': user_email,
+    }
+    return render(request, 'techtreasure/profile.html', context)
+
+
 
 def show_404(request):
     return render(request, 'techtreasure/404_page.html')
