@@ -18,20 +18,41 @@ def populate():
     categories = [
         {'name': 'CPU', 'views': 100},
         {'name': 'RAM', 'views': 50},
+        {'name': 'Cooling', 'views': 20},
+        {'name': 'Motherboard', 'views': 30},
+        {'name': 'GPU', 'views': 80},
+        {'name': 'Power Supply', 'views': 25},
+        {'name': 'Peripherals', 'views': 55},
+        {'name': 'Storage', 'views': 70},
         # Add more categories as needed
     ]
 
     # Example listings data
     listings = [
-        {'name': 'Intel Core i7', 'category': 'CPU', 'description_field': 'High performance CPU', 'suggested_price': 320.00, 'location': 'London', 'itemsold': False, 'creation_date': timezone.now()},
+        {'name': 'Intel Core i7', 'category': 'CPU', 'description_field': 'High performance CPU', 'suggested_price': 320.00, 'location': 'London', 'itemsold': False, 'creation_date': timezone.now(), 'picture_field': '/media/cpu.jpg'},
+        {'name': 'Corsair Vengeance LPX', 'category': 'RAM', 'description_field': 'High performance RAM', 'suggested_price': 60.00, 'location': 'New York', 'itemsold': False, 'creation_date': timezone.now(), 'picture_field': '/media/ram.jpg'},
+        {'name': 'Noctua NH-D15', 'category': 'Cooling', 'description_field': 'Efficient cooling system', 'suggested_price': 90.00, 'location': 'Berlin', 'itemsold': False, 'creation_date': timezone.now(), 'picture_field': '/media/cooling.jpg'},
+        {'name': 'ASUS ROG Strix', 'category': 'Motherboard', 'description_field': 'Feature-rich motherboard', 'suggested_price': 200.00, 'location': 'Tokyo', 'itemsold': False, 'creation_date': timezone.now(), 'picture_field': '/media/motherboard.jpg'},
+        {'name': 'RX 6700XT', 'category': 'GPU', 'description_field': 'Powerful graphics card', 'suggested_price': 470.00, 'location': 'San Francisco', 'itemsold': False, 'creation_date': timezone.now(), 'picture_field': '/media/gpu.jpg'},  # Updated entry
+        {'name': 'EVGA Supernova 750 G5', 'category': 'Power Supply', 'description_field': 'Reliable power supply', 'suggested_price': 120.00, 'location': 'London', 'itemsold': False, 'creation_date': timezone.now(), 'picture_field': '/media/powersupply.jpg'},
+        {'name': 'Logitech G502', 'category': 'Peripherals', 'description_field': 'High precision gaming mouse', 'suggested_price': 50.00, 'location': 'Paris', 'itemsold': False, 'creation_date': timezone.now(), 'picture_field': '/media/peripherals.jpg'},
+        {'name': 'Samsung 970 EVO Plus SSD', 'category': 'Storage', 'description_field': 'Fast storage solution', 'suggested_price': 100.00, 'location': 'Seoul', 'itemsold': False, 'creation_date': timezone.now(), 'picture_field': '/media/storage.jpg'},
         # Add more listings as needed
     ]
 
     # Example offers data
     offers = [
         {'listing': 'Intel Core i7', 'price': 300.00, 'offer_date': timezone.now()},
+        {'listing': 'Corsair Vengeance LPX', 'price': 55.00, 'offer_date': timezone.now()},
+        {'listing': 'Noctua NH-D15', 'price': 85.00, 'offer_date': timezone.now()},
+        {'listing': 'ASUS ROG Strix', 'price': 190.00, 'offer_date': timezone.now()},
+        {'listing': 'RX 6700XT', 'price': 450.00, 'offer_date': timezone.now()},
+        {'listing': 'EVGA Supernova 750 G5', 'price': 110.00, 'offer_date': timezone.now()},
+        {'listing': 'Logitech G502', 'price': 45.00, 'offer_date': timezone.now()},
+        {'listing': 'Samsung 970 EVO Plus SSD', 'price': 95.00, 'offer_date': timezone.now()},
         # Add more offers as needed
     ]
+    
 
     # Create and add categories to the database
     for cat_data in categories:
