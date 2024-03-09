@@ -12,7 +12,7 @@
 {% block body_block %}
     <div> 
         <a href="{% url 'techtreasure:searchlistings' %}">Search Listings</a>
-        <a href="/rango/add_category/">Add a New Listing </a><br />
+        <a href="{% url 'techtreasure:add_listing' %}">Add a New Listing </a><br />
     </div>
     <div class="categories">
         {% if categories %}
