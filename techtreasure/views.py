@@ -87,7 +87,7 @@ def searchlistings(request):
     response = render(request, 'techtreasure/searchlistings.html', context=context_dict)
     return response
 
-def add_category(request):
+def add_listing(request):
     form = CategoryForm()
     if request.method == 'POST':
         form = CategoryForm(request.POST)
@@ -96,6 +96,7 @@ def add_category(request):
             return redirect('/techtreasure/')
         else:
             print(form.errors)
+    return render(request, 'techtreasure/add_listing.html', {'form': form})
 
 def profile(request):
     user_name = request.session.get('user_name', 'Anonymous')
