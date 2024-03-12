@@ -18,23 +18,10 @@
         </div>
     </div>
 
-
-    
     <div>
         <h2 class="text-start">Recent Listings</h2>
-        <div class="categories container text-center">
-        {% if categories %}
-            <div class="row row-cols-auto">
-                {% for listing in listings %}
-                <div class="listing">
-                    <a href="{% url 'techtreasure:show_listing' category_name_slug=listing.category.slug id=listing.id %}"><img class="img-fluid" src="{{ MEDIA_URL }}{{ listing.picture_field }}" alt="Picture of {{ listing.name }}"></a>
-                    <a href="{% url 'techtreasure:show_listing' category_name_slug=listing.category.slug id=listing.id %}" class="listing-text-anchor">{{ listing.name }}</a>
-                </div>
-                {% endfor %}
-            </div>
-        {% else %}
-            <strong>No listings available.</strong>
-        {% endif %}
+        <div>
+            {% get_listings_list listings %}
         </div>
 
     </div>

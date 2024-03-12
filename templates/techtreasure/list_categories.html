@@ -1,22 +1,22 @@
 {% load static %}
 <div class="container">
-  {% if categories %}
-      <div class="row listing">
-          {% for c in categories %}
-              <div class="col-sm-6 col-md-3 mb-3">
-                  <div class="border grid-item tier1 listing-child" style="border: 1px">
-                      <a href="{% url 'techtreasure:show_category' c.slug %}">
-                          <img class="img-fluid card-img-top" src="{% static '/Categories/' %}{{ c.slug}}.svg" alt="Picture of {{ category.slug }}">
-                      </a>
-                      <div style="text-align: center;">
-                          <a href="{% url 'techtreasure:show_category' c.slug %}" class="listing-text-anchor">{{ c.name }}</a>
-                      </div>
-                  </div>
-              </div>
-          {% endfor %}
-      </div>
-  {% else %}
-      <strong>No categories available.</strong>
-  {% endif %}
+    {% if categories %}
+        <div class="row g-5">
+            {% for c in categories %}
+            <div class="col-md-3 col-12">    
+                    <div class="card">
+                        <a href="{% url 'techtreasure:show_category' c.slug %}">
+                            <img  class="card-img-top img-fit" src="{% static '/Categories/' %}{{ c.slug}}.svg" alt="Picture of {{ c.slug }}">
+                        </a>
+                        <div class="card-body">
+                            <a href="{% url 'techtreasure:show_category' c.slug %}" class="text-center card-text">{{ c.name }}</a>
+                        </div>
+                    </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <strong>No listings available.</strong>
+    {% endif %}
 </div>
 

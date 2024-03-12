@@ -51,8 +51,9 @@
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav ms-auto mb-2 mb-md-0">
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="{% url 'techtreasure:categories' %}">Categories</a>
+            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Categories</a>
             <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="{% url 'techtreasure:categories' %}">All Categories</a></li>
               {% get_all_categories %}
             </ul>
           </li>
