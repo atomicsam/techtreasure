@@ -115,8 +115,6 @@ def profile(request):
     }
     return render(request, 'techtreasure/profile.html', context)
 
-<<<<<<< HEAD
-=======
 def visitor_cookie_handler(request, response):
     # Get the number of visits to the site.
     # We use the COOKIES.get() function to obtain the visits cookie.
@@ -142,6 +140,5 @@ def visitor_cookie_handler(request, response):
 
 
 
->>>>>>> b6c475da8c90167b90804e2d37f97ac7f1f9b9fd
 def show_404(request):
     return render(request, 'techtreasure/404_page.html')
