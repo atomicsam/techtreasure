@@ -1,0 +1,5 @@
+{% load static %}
+
+{% for c in categories %}
+    <li><a class="dropdown-item" href="{% url 'techtreasure:show_category' c.slug %}">{{ c.name }}</a></li>
+{% endfor %}

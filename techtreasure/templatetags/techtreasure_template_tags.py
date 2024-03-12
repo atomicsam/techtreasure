@@ -10,3 +10,7 @@ def get_category_list(categories=Category.objects.all()):
 @register.inclusion_tag('techtreasure/list_listings.html')
 def get_listings_list(categories=Category.objects.all()):
     return {'categories': categories}
+
+@register.inclusion_tag('techtreasure/navbar_dropdown.html')
+def get_all_categories():
+    return {'categories': Category.objects.all().order_by("name")}
