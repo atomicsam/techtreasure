@@ -37,17 +37,14 @@ class Offer(models.Model):
     price = models.DecimalField(max_digits=5, decimal_places=2)
     offer_date = models.DateTimeField()
     listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
-    users = models.ManyToManyField(User)
-
-    def __str__(self):
-        return self.name
+    users = models.ForeignKey(User, on_delete=models.CASCADE)
     
 
 class UserProfile(models.Model):
-# This line is required. Links UserProfile to a User model instance.
+    # This line is required. Links UserProfile to a User model instance.
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-# The additional attributes we wish to include.
+    # The additional attributes we wish to include.
     website = models.URLField(blank=True)
     picture = models.ImageField(upload_to='profile_images', blank=True)
-def __str__(self):
-    return self.user.username
+    def __str__(self):
+        return self.user.username

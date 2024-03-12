@@ -19,7 +19,6 @@ def home(request):
     # request.session.set_test_cookie()
     visitor_cookie_handler(request)
     context_dict['visits'] = request.session['visits']
-    print(context_dict)
     
     response = render(request, 'techtreasure/home.html', context=context_dict)
     # response.set_cookie('visits', 'blue', max_age=3600)
@@ -156,7 +155,7 @@ def visitor_cookie_handler(request):
                                         '%Y-%m-%d %H:%M:%S')
     
     # If it's been more than a day since the last visit...
-    if (datetime.now() - last_visit_time).seconds > 0:
+    if (datetime.now() - last_visit_time).days > 0:
         visits = visits + 1
         # Update the last visit cookie now that we have updated the count
         request.session['last_visit'] = str(datetime.now())

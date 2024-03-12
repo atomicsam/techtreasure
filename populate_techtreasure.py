@@ -32,7 +32,7 @@ def populate():
     # Example listings data
     listings = [
         {'name': 'Intel Core i7', 'category': 'CPU', 'description_field': 'High performance CPU', 'suggested_price': 320.00, 'location': 'London', 'itemsold': False, 'creation_date': timezone.now(), 'picture_field': 'listings/cpu.jpg'},
-        {'name': 'Ryzen', 'category': 'CPU', 'description_field': 'High performance CPU, barely used', 'suggested_price': 310.00, 'location': 'Edinburgh', 'itemsold': False, 'creation_date': timezone.now(), 'picture_field': 'listings/cpu.jpg'},
+        {'name': 'Ryzen 5 5600', 'category': 'CPU', 'description_field': 'High performance CPU, barely used', 'suggested_price': 310.00, 'location': 'Edinburgh', 'itemsold': False, 'creation_date': timezone.now(), 'picture_field': 'listings/ryzen5600.jpg'},
         {'name': 'Corsair Vengeance LPX', 'category': 'RAM', 'description_field': 'High performance RAM', 'suggested_price': 60.00, 'location': 'New York', 'itemsold': False, 'creation_date': timezone.now(), 'picture_field': 'listings/ram.jpg'},
         {'name': 'Noctua NH-D15', 'category': 'Cooling', 'description_field': 'Efficient cooling system', 'suggested_price': 90.00, 'location': 'Berlin', 'itemsold': False, 'creation_date': timezone.now(), 'picture_field': 'listings/cooling.jpg'},
         {'name': 'ASUS ROG Strix', 'category': 'Motherboard', 'description_field': 'Feature-rich motherboard', 'suggested_price': 200.00, 'location': 'Tokyo', 'itemsold': False, 'creation_date': timezone.now(), 'picture_field': 'listings/motherboard.jpg'},
@@ -46,14 +46,14 @@ def populate():
 
     # Example offers data
     offers = [
-        {'listing': 'Intel Core i7', 'price': 300.00, 'offer_date': timezone.now()},
-        {'listing': 'Corsair Vengeance LPX', 'price': 55.00, 'offer_date': timezone.now()},
-        {'listing': 'Noctua NH-D15', 'price': 85.00, 'offer_date': timezone.now()},
-        {'listing': 'ASUS ROG Strix', 'price': 190.00, 'offer_date': timezone.now()},
-        {'listing': 'RX 6700XT', 'price': 450.00, 'offer_date': timezone.now()},
-        {'listing': 'EVGA Supernova 750 G5', 'price': 110.00, 'offer_date': timezone.now()},
-        {'listing': 'Logitech G502', 'price': 45.00, 'offer_date': timezone.now()},
-        {'listing': 'Samsung 970 EVO Plus SSD', 'price': 95.00, 'offer_date': timezone.now()},
+        {'listing': 'Intel Core i7', 'price': 300.00, 'offer_date': timezone.now(), 'user': User.objects.get(pk=1)},
+        {'listing': 'Corsair Vengeance LPX', 'price': 55.00, 'offer_date': timezone.now(), 'user': User.objects.get(pk=1)},
+        {'listing': 'Noctua NH-D15', 'price': 85.00, 'offer_date': timezone.now(), 'user': User.objects.get(pk=1)},
+        {'listing': 'ASUS ROG Strix', 'price': 190.00, 'offer_date': timezone.now(), 'user': User.objects.get(pk=1)},
+        {'listing': 'RX 6700XT', 'price': 450.00, 'offer_date': timezone.now(), 'user': User.objects.get(pk=1)},
+        {'listing': 'EVGA Supernova 750 G5', 'price': 110.00, 'offer_date': timezone.now(), 'user': User.objects.get(pk=1)},
+        {'listing': 'Logitech G502', 'price': 45.00, 'offer_date': timezone.now(), 'user': User.objects.get(pk=1)},
+        {'listing': 'Samsung 970 EVO Plus SSD', 'price': 95.00, 'offer_date': timezone.now(), 'user': User.objects.get(pk=1)},
         # Add more offers as needed
     ]
     
@@ -99,7 +99,7 @@ def add_offer(offer_data, listing):
     defaults = {
         'offer_date': offer_data['offer_date']
     }
-    o, created = Offer.objects.get_or_create(listing=listing, price=offer_data['price'], defaults=defaults)
+    o, created = Offer.objects.get_or_create(listing=listing, price=offer_data['price'], users=offer_data['user'], defaults=defaults)
     if created:
         print(f"Created offer for listing {listing.name} at price {offer_data['price']}")
     else:
