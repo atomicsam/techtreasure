@@ -15,4 +15,5 @@ urlpatterns = [
     path('404/', views.show_404, name='404'),
     path('add_listing/', views.add_listing, name='add_listing'),
     path('profile/', views.profile, name='profile'),
+    
 ]
