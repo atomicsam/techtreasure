@@ -4,6 +4,7 @@ from techtreasure.models import Category, Listing, User, Offer
 from techtreasure.forms import CategoryForm
 from django.shortcuts import redirect
 from django.http import HttpResponse
+from datetime import datetime
 
 # Create your views here.
 def home(request):
@@ -53,6 +54,12 @@ def show_category(request, category_name_slug):
         context_dict['listings'] = None
     
     response = render(request, 'techtreasure/category.html', context=context_dict)
+    return response
+
+def show_listing(request, category_name_slug, id):
+    context_dict = {}
+    
+    response = render(request, 'techtreasure/listing.html', context=context_dict)
     return response
 
 def signup(request):
@@ -107,8 +114,6 @@ def profile(request):
         'user_email': user_email,
     }
     return render(request, 'techtreasure/profile.html', context)
-
-
 
 def show_404(request):
     return render(request, 'techtreasure/404_page.html')

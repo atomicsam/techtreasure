@@ -32,6 +32,7 @@ def populate():
     # Example listings data
     listings = [
         {'name': 'Intel Core i7', 'category': 'CPU', 'description_field': 'High performance CPU', 'suggested_price': 320.00, 'location': 'London', 'itemsold': False, 'creation_date': timezone.now(), 'picture_field': 'listings/cpu.jpg'},
+        {'name': 'Ryzen', 'category': 'CPU', 'description_field': 'High performance CPU, barely used', 'suggested_price': 310.00, 'location': 'Edinburgh', 'itemsold': False, 'creation_date': timezone.now(), 'picture_field': 'listings/cpu.jpg'},
         {'name': 'Corsair Vengeance LPX', 'category': 'RAM', 'description_field': 'High performance RAM', 'suggested_price': 60.00, 'location': 'New York', 'itemsold': False, 'creation_date': timezone.now(), 'picture_field': 'listings/ram.jpg'},
         {'name': 'Noctua NH-D15', 'category': 'Cooling', 'description_field': 'Efficient cooling system', 'suggested_price': 90.00, 'location': 'Berlin', 'itemsold': False, 'creation_date': timezone.now(), 'picture_field': 'listings/cooling.jpg'},
         {'name': 'ASUS ROG Strix', 'category': 'Motherboard', 'description_field': 'Feature-rich motherboard', 'suggested_price': 200.00, 'location': 'Tokyo', 'itemsold': False, 'creation_date': timezone.now(), 'picture_field': 'listings/motherboard.jpg'},

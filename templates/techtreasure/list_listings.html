@@ -1,0 +1,16 @@
+{% load static %}
+<div class="container">
+    {% if categories %}
+        <div class="row listing">
+            {% for c in categories %}
+                <div class="col-sm-6 col-md-3 mb-3">
+                    <div class="border grid-item tier1 listing-child" style="border: 1px">
+
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <strong>No categories available.</strong>
+    {% endif %}
+</div>
