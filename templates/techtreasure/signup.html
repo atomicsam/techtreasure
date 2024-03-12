@@ -28,4 +28,22 @@
             <a href="{% url 'techtreasure:login' %}">Login</a>
         </div>
     </div>
+
+    <h1>Sign </h1>
+    {% if registered %}
+        techtreasure says: <strong>thank you for registering!</strong>
+        <a href="{% url 'techtreasure:index' %}">Return to the homepage.</a><br />
+    {% else %}
+        techtreasure says: <strong>register here!</strong><br />
+        <form id="user_form" method="post" action="{% url 'techtreasure:register' %}"
+            enctype="multipart/form-data">
+            {% csrf_token %}
+            <!-- Display each form -->
+            {{ user_form.as_p }}
+            {{ profile_form.as_p }}
+            <!-- Provide a button to click to submit the form. -->
+            <input type="submit" name="submit" value="Register" />
+        </form>
+    {% endif %}
+
 {% endblock %}
