@@ -56,13 +56,24 @@ def show_category(request, category_name_slug):
         context_dict['category'] = None
         context_dict['listings'] = None
     
-    response = render(request, 'techtreasure/category.html', context=context_dict)
+    if context_dict['category']==None:
+        response = render(request, 'techtreasure/404_page.html')
+    else:
+        response = render(request, 'techtreasure/category.html', context=context_dict)
     return response
 
-def show_listing(request, category_name_slug, id):
+def show_listing(request, category_name_slug, listing_id):
     context_dict = {}
-    
-    response = render(request, 'techtreasure/listing.html', context=context_dict)
+    try:
+        listing = Listing.objects.get(id=listing_id)
+        context_dict['listing'] = listing
+    except Listing.DoesNotExist:
+        context_dict['listing'] = None
+
+    if context_dict['listing']==None:
+        response = render(request, 'techtreasure/404_page.html')
+    else:
+        response = render(request, 'techtreasure/listing.html', context=context_dict)
     return response
 
 def signup(request):
@@ -86,8 +97,6 @@ def signup(request):
         user_form = UserForm()
         profile_form = UserProfileForm()
     return render(request, 'techtreasure/signup.html', {'user_form': user_form, 'profile_form': profile_form, 'signup': signup})
-
-    
 
    
 

@@ -6,9 +6,13 @@
             {% for listing in listings %}
             <div class="col-md-3 col-12">    
                     <div class="card">
-                        <img src="/media/{{ listing.picture_field }}" class="card-img-top img-fit" alt="{{ listing.name }}">
+                        <a href="{% url 'techtreasure:show_listing' listing.category.slug listing.id %}">
+                            <div class="zoom-img">
+                                <img src="/media/{{ listing.picture_field }}" class="card-img-top img-fit" alt="{{ listing.name }}">
+                            </div>
+                        </a>                        
                         <div class="card-body">
-                            <a href="{% url 'techtreasure:show_listing' category_name_slug=listing.category.slug id=listing.id %}" class="card-text text-center">{{ listing.name }}</a>
+                            <a href="{% url 'techtreasure:show_listing' listing.category.slug listing.id %}" class="card-text text-center">{{ listing.name }}</a>
                         </div>
                     </div>
             </div>
