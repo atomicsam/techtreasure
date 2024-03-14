@@ -76,6 +76,20 @@ def show_listing(request, category_name_slug, listing_id):
         response = render(request, 'techtreasure/listing.html', context=context_dict)
     return response
 
+def show_all_listings(request):
+    context_dict = {}
+    try:
+        listing = Listing.objects.get.all()
+        context_dict['listing'] = listing
+    except Listing.DoesNotExist:
+        context_dict['listing'] = None
+
+    if context_dict['listing']==None:
+        response = render(request, 'techtreasure/404_page.html')
+    else:
+        response = render(request, 'techtreasure/listings.html', context=context_dict)
+    return response
+
 def signup(request):
     registered = False
     if request.method == 'POST':
@@ -115,7 +129,7 @@ def login(request):
             print(f"Invalid login details: {username}, {password}")
             return HttpResponse("Invalid login details supplied.")
     else:
-        return render(request, 'rango/login.html')
+        return render(request, 'techtreasure/login.html')
    
 def searchlistings(request):
 

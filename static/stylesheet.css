@@ -59,3 +59,13 @@
 .zoom-img img:hover {
   transform: scale(1.2);
 }
+
+.faqs-img {
+  max-width: 30%;
+  height: auto;
+}
+
+.contact-us {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
