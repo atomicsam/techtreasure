@@ -33,8 +33,8 @@
 <header>
   <!-- Fixed navbar -->
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="{% url 'techtreasure:home' %}">techtreasure</a>
+    <div class="container">
+      <a class="navbar-brand" href="{% url 'techtreasure:home' %}"><img class="me-3 faqs-img icon-img" src="{% static 'images/icon.svg' %}">techtreasure</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -72,7 +72,7 @@
 <!-- Begin page content -->
 <main class="flex-shrink-0">
   <div class="container">
-    <h1 class="mt-5">
+    <h1 class="mt-2">
       {% block heading_block %}
       {% endblock %}
     </h1>
@@ -84,11 +84,11 @@
 </main>
 
 <footer class="footer mt-auto py-3 bg-body-tertiary">
-  <div class="container-fluid">
+  <div class="container">
     <span class="text-body-secondary">
-        <ul class="navbar-nav ms-auto mb-2 mb-md-0">
-            <li class="nav-item"><a href="{% url 'techtreasure:home' %}">Home</a></li>   
-            <li class="nav-item"><a href="{% url 'techtreasure:faqs' %}#contactus">Contact Us</a></li>      
+        <ul class="navbar-nav ms-auto list-group-horizontal">
+            <li class="nav-item p-2"><a class="text-decoration-none" href="{% url 'techtreasure:home' %}">Home</a></li>   
+            <li class="nav-item p-2"><a class="text-decoration-none" href="{% url 'techtreasure:faqs' %}#contactus">Contact Us</a></li>      
         </ul>
     </div>
     </span>
