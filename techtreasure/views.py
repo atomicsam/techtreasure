@@ -5,8 +5,9 @@ from techtreasure.forms import CategoryForm
 from django.shortcuts import redirect
 from django.http import HttpResponse
 from datetime import datetime
-from techtreasure.forms import UserForm, UserProfileForm
-
+from techtreasure.forms import UserForm
+from django.urls import reverse
+from django.contrib.auth import authenticate,login,logout
 # Create your views here.
 def home(request):
     category_list = Category.objects.annotate(number_of_listings=Count('listing')).order_by('-number_of_listings')[:4]
@@ -65,33 +66,33 @@ def show_listing(request, category_name_slug, id):
     response = render(request, 'techtreasure/listing.html', context=context_dict)
     return response
 
-def signup(request):
-    registered = False
+def register(request):
+    register = False
     if request.method == 'POST':
         user_form = UserForm(request.POST)
-        profile_form = UserProfileForm(request.POST)
-        if user_form.is_valid() and profile_form.is_valid():
+        
+        if user_form.is_valid():
             user = user_form.save()
             user.set_password(user.password)
             user.save()
-            profile = profile_form.save(commit=False)
+        
             profile.user = user
             if 'picture' in request.FILES:
                 profile.picture = request.FILES['picture']
-            profile.save()
-            registered = True
+
+            register = True
         else:
-            print(user_form.errors, profile_form.errors)
+            print(user_form.errors)
     else:
         user_form = UserForm()
-        profile_form = UserProfileForm()
-    return render(request, 'techtreasure/signup.html', {'user_form': user_form, 'profile_form': profile_form, 'signup': signup})
+       
+    return render(request, 'techtreasure/signup.html', {'user_form': user_form, 'signup': register})
 
     
 
    
 
-def login(request):
+def user_login(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -99,14 +100,14 @@ def login(request):
         if user:
             if user.is_active:
                 login(request, user)
-                return redirect(reverse('techtreasure:index'))
+                return redirect(reverse('techtreasure:home'))
             else:
                 return HttpResponse("Your techtreasure account is disabled.")
         else:
             print(f"Invalid login details: {username}, {password}")
             return HttpResponse("Invalid login details supplied.")
     else:
-        return render(request, 'rango/login.html')
+        return render(request, 'techtreasure/login.html')
    
 def searchlistings(request):
 
