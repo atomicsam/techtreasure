@@ -5,8 +5,10 @@
             {% for c in categories %}
             <div class="col-md-3 col-12">    
                     <div class="card">
-                        <a href="{% url 'techtreasure:show_category' c.slug %}">
-                            <img  class="card-img-top img-fit" src="{% static '/Categories/' %}{{ c.slug}}.svg" alt="Picture of {{ c.slug }}">
+                        <a class="card-img" href="{% url 'techtreasure:show_category' c.slug %}">
+                            <div class="zoom-img">
+                                <img class="card-img-top img-fit" src="{% static 'images/Categories/' %}{{ c.slug}}.svg" alt="Picture of {{ c.slug }}">
+                            </div>
                         </a>
                         <div class="card-body">
                             <a href="{% url 'techtreasure:show_category' c.slug %}" class="text-center card-text">{{ c.name }}</a>

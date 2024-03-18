@@ -1,28 +1,17 @@
 {% extends 'techtreasure/base.html' %}
 {% load staticfiles %}
+{% load techtreasure_template_tags %}
 
 {% block title_block %}
-    {{ category.name }}'s
+    {{ category.name }} Listings
 {% endblock %}
 
 {% block heading_block %}
-    {{ category.name }}
+    {{ category.name }} Listings
 {% endblock %}
 
 {% block body_block %}
     <div>
-        {% if category %}
-            {% if listings %}
-            <ul>
-                {% for listing in listings %}
-                <li><a href="{% url 'techtreasure:show_category' category.slug %}{{ listing.id }}/">{{ listing.name }}</a></li>
-                {% endfor %}
-        </ul>
-            {% else %}
-            <b>There are currently no {{ category.name }} listings.</b>
-            {% endif %}
-        {% else %}
-            <b>Listing  is invalid</b>
-        {% endif %}
+        {% get_category_listings_list category %}
     </div>
 {% endblock %}
