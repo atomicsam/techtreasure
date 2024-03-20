@@ -8,6 +8,7 @@ from datetime import datetime
 from techtreasure.forms import UserForm, UserProfileForm
 from django.urls import reverse
 from django.contrib.auth import authenticate,login,logout
+from django.contrib.auth.decorators import login_required
 from techtreasure.bing_search import run_query
 
 # Create your views here.
@@ -206,6 +207,12 @@ def search(request):
             result_list = run_query(query)
     return render(request, 'techtreasure/search.html', {'result_list': result_list})
 
+@login_required
+def user_logout(request):
+
+    logout(request)
+    # Take the user back to the homepage.
+    return redirect(reverse('techtreasure:home'))
 
 
 def dashboard_view(request):

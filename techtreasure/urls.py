@@ -20,6 +20,7 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('search/', views.search, name='search'),
     path('dashboard/', views.dashboard_view, name='dashboard'),
+    path('logout/', views.user_logout, name='logout')
     
     
 ]

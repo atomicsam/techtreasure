@@ -39,7 +39,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav ms-auto mb-2 mb-md-0">
+        <ul class="navbar-nav ms-auto mb-2 mb-md-0 flex-nowrap">
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Categories</a>
             <ul class="dropdown-menu">
@@ -52,7 +52,6 @@
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="{% url 'techtreasure:show_all_listings' %}">All Listings</a></li>
               <li><a class="dropdown-item" href="{% url 'techtreasure:search' %}">Search Listings</a></li>
-               <li><a href="{% url 'techtreasure:dashboard' %}">Dashboard</a></li>
             </ul>
           </li>
           <li class="nav-item">
@@ -61,6 +60,8 @@
           {% if user.is_authenticated %}
             <li class="nav-item">
               <a class="nav-link" href="{% url 'techtreasure:dashboard' %}">Profile Page</a>
+            </li>
+            <li>
               <a class="nav-link" href="{% url 'techtreasure:logout' %}">Sign Out</a>
             </li>
           {% else %}
@@ -77,6 +78,8 @@
   </nav>
 </header>
 
+
+
 <!-- Begin page content -->
 <main class="flex-shrink-0">
   <div class="container">
@@ -84,6 +87,8 @@
       {% block heading_block %}
       {% endblock %}
     </h1>
+      {% block extra_block %}
+      {% endblock %}
     <div class="lead">
       {% block body_block %}
       {% endblock %}
