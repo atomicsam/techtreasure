@@ -8,6 +8,8 @@ from datetime import datetime
 from techtreasure.forms import UserForm
 from django.urls import reverse
 from django.contrib.auth import authenticate,login,logout
+from rango.bing_search import run_query
+
 # Create your views here.
 def home(request):
     category_list = Category.objects.annotate(number_of_listings=Count('listing')).order_by('-number_of_listings')[:4]
@@ -194,3 +196,14 @@ def visitor_cookie_handler(request):
 
 def show_404(request):
     return render(request, 'techtreasure/404_page.html')
+
+
+
+def search(request):
+    result_list = []
+    if request.method == 'POST':
+        query = request.POST['query'].strip()
+        if query:
+            # Run our Bing function to get the results list!
+            result_list = run_query(query)
+    return render(request, 'techtreasure/search.html', {'result_list': result_list})
