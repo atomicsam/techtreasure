@@ -1,0 +1,154 @@
+{% extends 'techtreasure/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    LISTING_PLACEHOLDER's
+{% endblock %}
+
+{% block heading_block %}
+    {{ listing.name }}
+{% endblock %}
+
+{% block body_block %}
+    <style>
+        .containera {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 30px;
+
+        {#border: 1px solid #ccc;#}{#background-color: white;#}{#box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);#}
+        }
+
+        .containera h1 {
+            text-align: center;
+            color: #ffffff;
+        }
+
+        .containera label {
+            font-weight: bold;
+            display: block; /* 将标签显示为块级元素，使其垂直排列 */
+            margin-bottom: 5px; /* 添加一些底部间距 */
+            width: 100%;
+        }
+
+        input[type="text"],
+        textarea,
+        input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+            box-sizing: border-box; /* 将内边距和边框计算在元素的总宽度内 */
+            outline: none;
+        }
+
+        textarea {
+            min-height: 100px;
+        }
+
+        .custom-button {
+            background-color: #28a5de;
+            color: white;
+            padding: 10px 40px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        {#width: 100%;#}
+        }
+
+        /* 将文件上传框和标签水平对齐 */
+        .upload-container {
+            display: flex;
+            align-items: center; /* 垂直居中对齐 */
+            justify-content: center;
+        }
+
+        .upload-container label {
+            width: auto;
+            text-align: right;
+            margin-right: 10px; /* 添加一些右侧间距 */
+        }
+
+        .file_box {
+            border: 1px solid #000000;
+            border-radius: 10px;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6px 20px;
+            background: #c2c26a;
+            position: relative;
+        }
+
+        .file_box input[type="file"] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            opacity: 0;
+            height: 100%;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+    </style>
+
+    <div class="containera">
+        <h1>Create a GPU Listing</h1>
+        <form id="MakeListingForm" style="display: flex;;flex-direction: column;align-items: center;"
+              action="{% url 'makelisting' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" required>
+
+            <label for="describe">Description:</label>
+            <textarea id="describe" name="describe" required></textarea>
+
+            <label for="price">Price:</label>
+            <input type="text" id="price" name="price" required>
+
+            <!-- 将文件上传框和标签放在一个容器中 -->
+            <div class="upload-container">
+                <label for="image">Upload Image:</label>
+                <div class="file_box">
+                    <input type="file" id="image" name="image" accept="image/*" required>
+                    <div>Browse...</div>
+                </div>
+
+            </div>
+
+            <button type="submit" class="custom-button">Save</button>
+        </form>
+    </div>
+
+    <script>
+        const form = document.getElementById('MakeListingForm');
+        form.addEventListener('submit', async function (event) {
+            event.preventDefault();
+
+            const formData = new FormData(form);
+
+            try {
+                const response = await fetch(form.getAttribute('action'), {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    const responseData = await response.json();
+                    if (responseData.code === 200) {
+                        alert(responseData.message);
+                    } else {
+                        alert(responseData.message);
+                    }
+                } else {
+                    alert(responseData.message);
+                }
+            } catch (error) {
+                console.error('Error occurred while updating password:', error);
+            }
+        });
+    </script>
+{% endblock %}
