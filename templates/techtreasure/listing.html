@@ -1,28 +1,15 @@
 {% extends 'techtreasure/base.html' %}
 {% load staticfiles %}
 
-{% block title_block %}
-    {{ listing.name }}
-{% endblock %}
+{% block body_block %}
+    <body>
+    <div class="item-container">
 
-{% block heading_block %}
-{% endblock %}
-
-{% block body_block %}     
-    <div class="container-fluid" style="clear: both;">
-        <div class="row">
-            <div class="col-md-4" style="height: 300px; width:auto; text-align: center;">
-                <img class="card-img-top mb-5 mb-md-0 rounded" style="max-height: 100%; max-width: 100%;" src="/media/{{ listing.picture_field }}" alt="Picture of {{ listing.name }}" />
-            </div>
-            <div class="col-md-6 text-align: center;">
-                <h1 class="display-5 fw-bolder">{{ listing.name }}</h1>
-                <div class="fs-5 mb-5">
-                    <span>Max Offer:</span>
-                    <span>£{{ listing.suggested_price }}</span>
-                </div>
-                <p class="lead">{{ listing.description_field }}</p>
-            </div>
         </div>
+    <div class="paging">
+        <div class="pre">previous page</div>
+        <div class="page">current page：1</div>
+        <div class="next">next page</div>
     </div>
     <script>
         var count = 0
@@ -34,7 +21,6 @@
             xhr.onreadystatechange = function () {
                 if (xhr.readyState == 4 && xhr.status == 200) {
                     var response = JSON.parse(xhr.responseText);
-                    //总页数
                     count = response.count_num
                     displayHistoryRecords(response.data);
                 }
