@@ -1,5 +1,5 @@
 from django import forms
-from techtreasure.models import Listing, Category
+from techtreasure.models import Listing, Category, UserProfile
 from django.contrib.auth.models import User
 
 class CategoryForm(forms.ModelForm):
@@ -25,11 +25,15 @@ class PageForm(forms.ModelForm):
     class Meta:
         # Provide an association between the ModelForm and a model
         model = Listing
-
         exclude = ('category',)
 
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
     class Meta:
         model = User
-        fields = ('username', 'email', 'password',)
+        fields = ('username', 'password',)
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ('first_name', 'last_name',)

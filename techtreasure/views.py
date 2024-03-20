@@ -1,11 +1,11 @@
 from django.shortcuts import render
 from django.db.models import Count
-from techtreasure.models import Category, Listing, User, Offer
+from techtreasure.models import Category, Listing, User, Offer, UserProfile
 from techtreasure.forms import CategoryForm
 from django.shortcuts import redirect
 from django.http import HttpResponse
 from datetime import datetime
-from techtreasure.forms import UserForm
+from techtreasure.forms import UserForm, UserProfileForm
 from django.urls import reverse
 from django.contrib.auth import authenticate,login,logout
 from techtreasure.bing_search import run_query
@@ -94,26 +94,28 @@ def show_all_listings(request):
     return response
 
 def register(request):
-    register = False
+    registered = False
     if request.method == 'POST':
         user_form = UserForm(request.POST)
+        profile_form = UserProfileForm(request.POST)
         
-        if user_form.is_valid():
+        if user_form.is_valid() and profile_form.is_valid():
             user = user_form.save()
             user.set_password(user.password)
             user.save()
         
+            profile = profile_form.save(commit=False)
             profile.user = user
-            if 'picture' in request.FILES:
-                profile.picture = request.FILES['picture']
+            profile.save()
 
-            register = True
+            registered = True
         else:
-            print(user_form.errors)
+            print(user_form.errors, profile_form.errors)
     else:
         user_form = UserForm()
-       
-    return render(request, 'techtreasure/signup.html', {'user_form': user_form, 'signup': register})
+        profile_form = UserProfileForm()
+
+    return render(request, 'techtreasure/signup.html', {'user_form': user_form, 'profile_form': profile_form, 'registered': registered})
 
    
 
@@ -170,10 +172,6 @@ def get_server_side_cookie(request, cookie, default_val=None):
     return val
 
 def visitor_cookie_handler(request):
-    # Get the number of visits to the site.
-    # We use the COOKIES.get() function to obtain the visits cookie.
-    # If the cookie exists, the value returned is casted to an integer.
-    # If the cookie doesn't exist, then the default value of 1 is used.
     visits = int(get_server_side_cookie(request, 'visits', '1'))
     
     last_visit_cookie = get_server_side_cookie(request, 'last_visit', str(datetime.now()))
