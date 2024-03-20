@@ -15,7 +15,6 @@
         var count = 0
         var currentPage = 1;
         var pageSize = 10
-        // 发送GET请求获取历史记录数据
         function getHistoryRecords(page, limit) {
             var xhr = new XMLHttpRequest();
             xhr.open("GET",  "/login/userprofile/get_history/?page=" + page + "&limit=" + limit, true);
@@ -30,10 +29,9 @@
             xhr.send();
         }
 
-        // 在页面上展示历史记录数据
         function displayHistoryRecords(records) {
             var container = document.getElementsByClassName("item-container")[0];
-            container.innerHTML = ""; // 清空容器
+            container.innerHTML = "";
             console.log(container)
 
             for (var i = 0; i < records.length; i++) {
@@ -46,9 +44,8 @@
             }
         }
 
-        // 当页面加载完成时，自动请求第一页的历史记录数据
         window.onload = function() {
-            getHistoryRecords(currentPage, pageSize); // 默认请求第一页，每页10条记录
+            getHistoryRecords(currentPage, pageSize);
         };
 
 
@@ -58,7 +55,7 @@
         nextButton.onclick = function (){
             if (currentPage < count) {
                      currentPage++;
-                    pageElement.textContent = "当前页：" + currentPage;
+                    pageElement.textContent = "current page：" + currentPage;
                     getHistoryRecords(currentPage, pageSize);
                 }
         }
@@ -66,7 +63,7 @@
         preButton.onclick = function (){
            if (currentPage > 1) {
                     currentPage--;
-                    pageElement.textContent = "当前页：" + currentPage;
+                    pageElement.textContent = "current page：" + currentPage;
                getHistoryRecords(currentPage, pageSize);
                 }
         }

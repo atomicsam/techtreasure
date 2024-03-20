@@ -1,10 +1,10 @@
 from django.urls import path
+from login import  views
 
-from login.views import HistoryClassModel, ChangePasswordModel, MakeListingModel, GetHistoryClassModel
 
 urlpatterns = [
-    path('userprofile/setting/change_password', ChangePasswordModel.as_view(), name='change_password'),
-    path('userprofile/history/', GetHistoryClassModel.as_view(), name='history'),
-    path('userprofile/get_history/', HistoryClassModel.as_view(), name='get_history'),
-    path('makelisting/', MakeListingModel.as_view(), name='makelisting'),
+    path('userprofile/setting/change_password', views.change_password, name='change_password'),
+    path('userprofile/history/', views.history_views, name='history'),
+    path('userprofile/get_history/', views.history_data, name='get_history'),
+    path('makelisting/', views.make_listing, name='makelisting'),
 ]
