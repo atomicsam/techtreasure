@@ -1,5 +1,6 @@
 from django import forms
 from techtreasure.models import Listing, Category
+from django.contrib.auth.models import User
 
 class CategoryForm(forms.ModelForm):
     name = forms.CharField(max_length=128,
@@ -26,3 +27,9 @@ class PageForm(forms.ModelForm):
         model = Listing
 
         exclude = ('category',)
+
+class UserForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput())
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'password',)

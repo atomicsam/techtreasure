@@ -1,5 +1,6 @@
 {% extends 'techtreasure/base.html' %}
 {% load staticfiles %}
+{% load techtreasure_template_tags %}
 
 {% block title_block %}
     Home
@@ -10,32 +11,19 @@
 {% endblock %}
 
 {% block body_block %}
-    <div class="categories">
-    <h2>Popular Categories</h2>
-    {% if categories %}
-        <ul>
-        {% for category in categories %}
-            <a href="{% url 'techtreasure:show_category' category.slug %}"><img id="listing" class="img-fluid" src="/static/{{ category.name }}.svg" alt="Picture of {{ category.name }}"></a>
-            <li><a href="{% url 'techtreasure:show_category' category.slug %}">{{ category.name }}</a></li>
-        {% endfor %}
-        </ul>
-    {% else %}
-        <strong>No categories available.</strong>
-    {% endif %}
+    <div>
+        <h2 class="text-start">Popular Categories</h2>
+        <div>
+            {% get_category_list categories %}
+        </div>
     </div>
-    
-    <div class="listings">
-    <h2>Recent Listings</h2>
-    {% if categories %}
-        <ul>
-        {% for listing in listings %}
-            <img id="listing" class="img-thumbnail" src="{{ MEDIA_URL }}{{ listing.picture_field }}" alt="Picture of {{ listing.name }}">
-            <li>{{ listing.name }}</li>
-        {% endfor %}
-        </ul>
-    {% else %}
-        <strong>No listings available.</strong>
-    {% endif %}
+
+    <div>
+        <h2 class="text-start">Recent Listings</h2>
+        <div>
+            {% get_recent_listings listings %}
+        </div>
+
     </div>
     
 {% endblock %}

@@ -71,6 +71,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.media',
+                'django.template.context_processors.static',
             ],
             'libraries': {  # Adding this section should work around the issue.
                 'staticfiles': 'django.templatetags.static',
