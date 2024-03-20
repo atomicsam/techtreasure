@@ -26,8 +26,8 @@
 
         .containera label {
             font-weight: bold;
-            display: block; /* 将标签显示为块级元素，使其垂直排列 */
-            margin-bottom: 5px; /* 添加一些底部间距 */
+            display: block;
+            margin-bottom: 5px;
             width: 100%;
         }
 
@@ -39,7 +39,7 @@
             border-radius: 5px;
             border: 1px solid #ccc;
             margin-bottom: 10px;
-            box-sizing: border-box; /* 将内边距和边框计算在元素的总宽度内 */
+            box-sizing: border-box;
             outline: none;
         }
 
@@ -58,17 +58,16 @@
         {#width: 100%;#}
         }
 
-        /* 将文件上传框和标签水平对齐 */
         .upload-container {
             display: flex;
-            align-items: center; /* 垂直居中对齐 */
+            align-items: center;
             justify-content: center;
         }
 
         .upload-container label {
             width: auto;
             text-align: right;
-            margin-right: 10px; /* 添加一些右侧间距 */
+            margin-right: 10px;
         }
 
         .file_box {
@@ -109,7 +108,6 @@
             <label for="price">Price:</label>
             <input type="text" id="price" name="price" required>
 
-            <!-- 将文件上传框和标签放在一个容器中 -->
             <div class="upload-container">
                 <label for="image">Upload Image:</label>
                 <div class="file_box">
