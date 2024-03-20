@@ -151,7 +151,7 @@ def add_listing(request):
             return redirect('/techtreasure/')
         else:
             print(form.errors)
-    return render(request, 'techtreasure/add_listing.html', {'form': form})
+    return render(request, 'techtreasure/makelisting.html', {'form': form})
 
 def profile(request):
     user_name = request.session.get('user_name', 'Anonymous')
