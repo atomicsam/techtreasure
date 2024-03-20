@@ -12,11 +12,17 @@ from django.conf import settings
 Category.objects.all().delete()
 Listing.objects.all().delete()
 Offer.objects.all().delete()
+User.objects.all().delete()
 
 
 def populate():
     # Example category data
-    print("Test: " + settings.MEDIA_ROOT+'\cpu.jpg')
+    user = User.objects.create_user(username='ed',
+                                 first_name='Edan',
+                                 last_name='Regan',
+                                 password='edan')
+    user.save()
+
     categories = [
         {'name': 'CPU', 'views': 100},
         {'name': 'RAM', 'views': 50},
@@ -46,14 +52,14 @@ def populate():
 
     # Example offers data
     offers = [
-        {'listing': 'Intel Core i7', 'price': 300.00, 'offer_date': timezone.now(), 'user': User.objects.get(pk=1)},
-        {'listing': 'Corsair Vengeance LPX', 'price': 55.00, 'offer_date': timezone.now(), 'user': User.objects.get(pk=1)},
-        {'listing': 'Noctua NH-D15', 'price': 85.00, 'offer_date': timezone.now(), 'user': User.objects.get(pk=1)},
-        {'listing': 'ASUS ROG Strix', 'price': 190.00, 'offer_date': timezone.now(), 'user': User.objects.get(pk=1)},
-        {'listing': 'RX 6700XT', 'price': 450.00, 'offer_date': timezone.now(), 'user': User.objects.get(pk=1)},
-        {'listing': 'EVGA Supernova 750 G5', 'price': 110.00, 'offer_date': timezone.now(), 'user': User.objects.get(pk=1)},
-        {'listing': 'Logitech G502', 'price': 45.00, 'offer_date': timezone.now(), 'user': User.objects.get(pk=1)},
-        {'listing': 'Samsung 970 EVO Plus SSD', 'price': 95.00, 'offer_date': timezone.now(), 'user': User.objects.get(pk=1)},
+        {'listing': 'Intel Core i7', 'price': 300.00, 'offer_date': timezone.now(), 'user': user},
+        {'listing': 'Corsair Vengeance LPX', 'price': 55.00, 'offer_date': timezone.now(), 'user': user},
+        {'listing': 'Noctua NH-D15', 'price': 85.00, 'offer_date': timezone.now(), 'user': user},
+        {'listing': 'ASUS ROG Strix', 'price': 190.00, 'offer_date': timezone.now(), 'user': user},
+        {'listing': 'RX 6700XT', 'price': 450.00, 'offer_date': timezone.now(), 'user': user},
+        {'listing': 'EVGA Supernova 750 G5', 'price': 110.00, 'offer_date': timezone.now(), 'user': user},
+        {'listing': 'Logitech G502', 'price': 45.00, 'offer_date': timezone.now(), 'user': user},
+        {'listing': 'Samsung 970 EVO Plus SSD', 'price': 95.00, 'offer_date': timezone.now(), 'user': user},
         # Add more offers as needed
     ]
     

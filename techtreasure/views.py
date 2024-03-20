@@ -8,7 +8,7 @@ from datetime import datetime
 from techtreasure.forms import UserForm
 from django.urls import reverse
 from django.contrib.auth import authenticate,login,logout
-from rango.bing_search import run_query
+from techtreasure.bing_search import run_query
 
 # Create your views here.
 def home(request):
