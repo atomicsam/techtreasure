@@ -16,6 +16,7 @@ urlpatterns = [
     path('add_listing/', views.add_listing, name='add_listing'),
     path('profile/', views.profile, name='profile'),
     path('register/', views.register, name='register'),
+    path('search/', views.search, name='search'),
     
     
 ]
