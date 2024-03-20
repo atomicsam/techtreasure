@@ -31,7 +31,7 @@ def populate():
 
     # Example listings data
     listings = [
-        {'name': 'Intel Core i7', 'category': 'CPU', 'description_field': 'High performance CPU', 'suggested_price': 320.00, 'location': 'London', 'itemsold': False, 'creation_date': timezone.now(), 'picture_field': 'listings/cpu.jpg'},
+        {'name': 'Intel Core i7', 'category': 'CPU', 'description_field': '11th Gen Intel® Core™ i7-11700 desktop processor. Featuring Intel® Turbo Boost Max Technology 3.0 and PCIe Gen 4.0 support. Built for the everyday desktop user; this processor delivers amazing performance for everything from enthusiast gaming and creation to productivity Thermal solution included in the box. Compatible with 500 series & select 400 series chipset based motherboards. Refer to motherboard vendor for compatiblity details. 65W.', 'suggested_price': 320.00, 'location': 'London', 'itemsold': False, 'creation_date': timezone.now(), 'picture_field': 'listings/cpu.jpg'},
         {'name': 'Ryzen 5 5600', 'category': 'CPU', 'description_field': 'High performance CPU, barely used', 'suggested_price': 310.00, 'location': 'Edinburgh', 'itemsold': False, 'creation_date': timezone.now(), 'picture_field': 'listings/ryzen5600.jpg'},
         {'name': 'Corsair Vengeance LPX', 'category': 'RAM', 'description_field': 'High performance RAM', 'suggested_price': 60.00, 'location': 'New York', 'itemsold': False, 'creation_date': timezone.now(), 'picture_field': 'listings/ram.jpg'},
         {'name': 'Noctua NH-D15', 'category': 'Cooling', 'description_field': 'Efficient cooling system', 'suggested_price': 90.00, 'location': 'Berlin', 'itemsold': False, 'creation_date': timezone.now(), 'picture_field': 'listings/cooling.jpg'},
