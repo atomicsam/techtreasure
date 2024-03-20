@@ -21,6 +21,8 @@ from django.conf.urls.static import static
 from techtreasure import views
 
 urlpatterns = [
+    #path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+   
     path('', views.home, name='home'),
     path('techtreasure/', include('techtreasure.urls')),
     path('admin/', admin.site.urls),

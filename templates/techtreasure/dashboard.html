@@ -1,0 +1,40 @@
+{% extends 'techtreasure/base.html' %}
+{% load static %}
+
+{% block title_block %}
+    Dashboard
+{% endblock %}
+
+{% block heading_block %}
+    Dashboard
+{% endblock %}
+
+{% block body_block %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Active Listings</h5>
+                        <!-- Placeholder for sales summary chart -->
+                        <canvas id="salesChart" width="400" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Active Offers </h5>
+                        <!-- Placeholder for recent activities list -->
+                        <ul class="list-group">
+                            <li class="list-group-item"></li>
+                            <li class="list-group-item"></li>
+                            <li class="list-group-item">Activity 3</li>
+                            <!-- Add more activities here dynamically if needed -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

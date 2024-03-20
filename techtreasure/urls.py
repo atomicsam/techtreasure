@@ -1,6 +1,8 @@
 from django.urls import path
 from techtreasure import views
 
+
+
 app_name = 'techtreasure'
 
 urlpatterns = [
@@ -16,6 +18,8 @@ urlpatterns = [
     path('add_listing/', views.add_listing, name='add_listing'),
     path('profile/', views.profile, name='profile'),
     path('register/', views.register, name='register'),
+    path('search/', views.search, name='search'),
+    path('dashboard/', views.dashboard_view, name='dashboard'),
     
     
 ]

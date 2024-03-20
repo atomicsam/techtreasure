@@ -205,3 +205,12 @@ def search(request):
             # Run our Bing function to get the results list!
             result_list = run_query(query)
     return render(request, 'techtreasure/search.html', {'result_list': result_list})
+
+
+
+def dashboard_view(request):
+   
+    context = {
+       
+    }
+    return render(request, 'techtreasure/dashboard.html', context)
