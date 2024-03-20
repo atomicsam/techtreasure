@@ -10,27 +10,32 @@
 {% endblock %}
 
 {% block body_block %}
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="card">
+    <div class="container-xl"> <!-- Use "container-xl" for extra large container -->
+        <div class="row mx-auto"> <!-- Add "mx-auto" class to center horizontally -->
+            <div class="col-md-5"> <!-- Use "col-md-6" to allocate half width of the container -->
+                <div class="card text-center"> <!-- Add "text-center" class to center-align text -->
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Active Listings</h5>
+                    </div>
                     <div class="card-body">
-                        <h5 class="card-title">Active Listings</h5>
-                        <!-- Placeholder for sales summary chart -->
-                        <canvas id="salesChart" width="400" height="200"></canvas>
+                        <ul class="list-group">
+                            {% for listing in active_listings %}
+                                <li class="list-group-item">{{ listing.name }}</li>
+                            {% endfor %}
+                        </ul>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="card">
+            <div class="col-md-5"> <!-- Use "col-md-6" to allocate half width of the container -->
+                <div class="card text-center"> <!-- Add "text-center" class to center-align text -->
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Active Offers</h5>
+                    </div>
                     <div class="card-body">
-                        <h5 class="card-title">Active Offers </h5>
-                        <!-- Placeholder for recent activities list -->
                         <ul class="list-group">
-                            <li class="list-group-item"></li>
-                            <li class="list-group-item"></li>
-                            <li class="list-group-item">Activity 3</li>
-                            <!-- Add more activities here dynamically if needed -->
+                            {% for offer in active_offers %}
+                                <li class="list-group-item">{{ offer.listing.name }}</li>
+                            {% endfor %}
                         </ul>
                     </div>
                 </div>
@@ -38,3 +43,4 @@
         </div>
     </div>
 {% endblock %}
+

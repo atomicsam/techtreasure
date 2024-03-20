@@ -9,6 +9,8 @@ from techtreasure.forms import UserForm
 from django.urls import reverse
 from django.contrib.auth import authenticate,login,logout
 from techtreasure.bing_search import run_query
+from techtreasure.models import Listing
+
 
 # Create your views here.
 def home(request):
@@ -209,10 +211,15 @@ def search(request):
     return render(request, 'techtreasure/search.html', {'result_list': result_list})
 
 
-
 def dashboard_view(request):
-   
+    # Get active listings
+    active_listings = Listing.objects.filter(itemsold=False)
+
+    # Get active offers
+    active_offers = Offer.objects.all()  # You might need to filter based on some condition
+
     context = {
-       
+        'active_listings': active_listings,
+        'active_offers': active_offers,
     }
     return render(request, 'techtreasure/dashboard.html', context)
