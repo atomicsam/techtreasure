@@ -39,3 +39,12 @@ class Offer(models.Model):
     listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
     users = models.ForeignKey(User, on_delete=models.CASCADE)
     
+class UserProfile(models.Model):
+
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    first_name = models.CharField(max_length=30, blank=False)
+    last_name = models.CharField(max_length=30, blank=False)
+    
+    def __str__(self):
+        return self.user.username
