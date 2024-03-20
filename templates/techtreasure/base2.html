@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-{% load staticfiles %}
+{% load static %}
 
 <html>
     <head>
-        <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}stylesheet.css" />
+        <link rel="stylesheet" type="text/css" href="{ static 'stylesheet.css' }" />
         <title>
             techtreasure -
             {% block title_block %}

@@ -8,6 +8,7 @@ from datetime import datetime
 from techtreasure.forms import UserForm
 from django.urls import reverse
 from django.contrib.auth import authenticate,login,logout
+
 # Create your views here.
 def home(request):
     category_list = Category.objects.annotate(number_of_listings=Count('listing')).order_by('-number_of_listings')[:4]
@@ -149,7 +150,7 @@ def add_listing(request):
             return redirect('/techtreasure/')
         else:
             print(form.errors)
-    return render(request, 'techtreasure/add_listing.html', {'form': form})
+    return render(request, 'techtreasure/makelisting.html', {'form': form})
 
 def profile(request):
     user_name = request.session.get('user_name', 'Anonymous')
