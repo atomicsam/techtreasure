@@ -33,8 +33,7 @@ def run_query(search_terms):
     http://bit.ly/twd-bing-api
     """
     bing_key = read_bing_key()
-    print(bing_key)
-    search_url = 'https://api.bing.microsoft.com/v7.0/search'
+    search_url = 'https://api.bing.microsoft.com/v7.0/images/search'
     headers = {'Ocp-Apim-Subscription-Key': bing_key}
     params = {'q': search_terms, 'textDecorations': True, 'textFormat':' HTML'}
 
