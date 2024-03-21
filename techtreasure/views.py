@@ -84,10 +84,10 @@ def show_listing(request, category_name_slug, listing_id):
         response = render(request, 'techtreasure/listing.html', context=context_dict)
     return response
 
-def show_all_listings(request):
+def all_listings(request):
     context_dict = {}
     try:
-        listing = Listing.objects.get.all()
+        listing = Listing.objects.all()
         context_dict['listing'] = listing
     except Listing.DoesNotExist:
         context_dict['listing'] = None

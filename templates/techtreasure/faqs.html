@@ -2,22 +2,61 @@
 {% load staticfiles %}
 
 {% block title_block %}
-    FAQ's
+    About Us
 {% endblock %}
 
 {% block heading_block %}
-    FAQ's
+    About Us
 {% endblock %}
 
 {% block body_block %}
-    <div style="height:200px;">
+    <div class="faq-block">
         <img class="rounded float-end faqs-img img-responsive" src="{% static 'images/faqs/jason-goodman-Oalh2MojUuk-unsplash.jpg' %}">
         <p>
             Welcome to TechTreasure, where the world of technology meets the excitement of auctions! At TechTreasure, we've created a unique online platform dedicated to the buying and selling of PC parts through thrilling auction experiences. Our mission is to empower tech enthusiasts, gamers, and professionals to discover, bid on, and sell high-quality PC components in a dynamic and engaging marketplace.
         </p>
     </div>
-    <div class="contact-us clearfix">
-        <h2>Contact Us</h2>
+    <h3>Frequently Asked Questions</h3>
+    <div class="accordion" id="FAQ">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingOne">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                What types of PC hardware can I find on Tech Treasure's auctioning site?
+            </button>
+          </h2>
+          <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+                Tech Treasure specializes in a wide range of PC hardware, including but not limited to CPUs, GPUs, motherboards, RAM modules, SSDs, and peripherals like keyboards and mice. We strive to offer a comprehensive selection to meet the needs of gamers, enthusiasts, and professionals alike.
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingTwo">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                How does Tech Treasure ensure the quality and authenticity of the PC hardware being auctioned?
+            </button>
+          </h2>
+          <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+                At Tech Treasure, we take the quality and authenticity of our products seriously. Each item listed on our auctioning site undergoes a thorough verification process to ensure it meets our standards. We work closely with trusted suppliers and employ rigorous inspection procedures to authenticate hardware components. Additionally, our community-driven rating system helps maintain transparency and trust among our users.
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingThree">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+              What measures does Tech Treasure have in place to facilitate secure transactions and protect buyers and sellers?
+            </button>
+          </h2>
+          <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+                Tech Treasure prioritizes the security of all transactions conducted on our platform. We utilize encryption protocols to safeguard sensitive information, such as payment details and personal data. Moreover, our escrow service provides an added layer of protection by holding funds in escrow until both parties confirm the successful completion of the transaction. Additionally, we offer dispute resolution mechanisms to address any issues that may arise during the buying or selling process, ensuring a safe and fair marketplace for all users.
+            </div>
+          </div>
+        </div>
+      </div>
+    <div class="contact-us clearfix" id="contactus">
+        <h3>Contact Us</h3>
         <p>
             If you require assistance with your account, a transaction, or have any general inquiries, our customer support team 
             is available to help. You can reach them via email or phone during our operating hours. <br />

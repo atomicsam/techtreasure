@@ -49,7 +49,7 @@
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Listings</a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="{% url 'techtreasure:show_all_listings' %}">All Listings</a></li>
+              <li><a class="dropdown-item" href="{% url 'techtreasure:all_listings' %}">All Listings</a></li>
               <li><a class="dropdown-item" href="{% url 'techtreasure:search' %}">Search Listings</a></li>
               {% if user.is_authenticated %}
               <li><a class="dropdown-item" href="{% url 'techtreasure:add_listing' %}">Make New Listing</a></li>
@@ -57,7 +57,7 @@
             </ul>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'techtreasure:faqs' %}">FAQ's</a>
+            <a class="nav-link" href="{% url 'techtreasure:faqs' %}">About Us</a>
           </li>
           {% if user.is_authenticated %}
             <li class="nav-item">
@@ -103,7 +103,8 @@
     <span class="text-body-secondary">
         <ul class="navbar-nav ms-auto list-group-horizontal">
             <li class="nav-item p-2"><a class="text-decoration-none" href="{% url 'techtreasure:home' %}">Home</a></li>   
-            <li class="nav-item p-2"><a class="text-decoration-none" href="{% url 'techtreasure:faqs' %}#contactus">Contact Us</a></li>      
+            <li class="nav-item p-2"><a class="text-decoration-none" href="{% url 'techtreasure:faqs' %}#contactus">Contact Us</a></li>  
+            <li class="nav-item p-2"><a class="text-decoration-none" href="{% url 'techtreasure:faqs' %}#FAQ">FAQ's</a></li>       
         </ul>
     </div>
     </span>
