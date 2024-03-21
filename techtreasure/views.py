@@ -1,3 +1,4 @@
+from itertools import product
 from django.shortcuts import render
 from django.db.models import Count
 from techtreasure.models import Category, Listing, User, Offer
@@ -149,12 +150,15 @@ def user_login(request):
         return render(request, 'techtreasure/login.html')
    
 def searchlistings(request):
+    query = request.GET.get('q', '')
+    results = []
+    if query:
+        # Perform the search query
+        results = Listing.objects.filter(name__icontains=query, itemsold=False)
+    return render(request, 'techtreasure/search_results.html', {'query': query, 'results': results})
 
-    context_dict = {}
-    context_dict['boldmessage'] = 'Crunchy, creamy, cookie, candy, cupcake!'
+
     
-    response = render(request, 'techtreasure/searchlistings.html', context=context_dict)
-    return response
 
 @login_required
 def add_listing(request):
