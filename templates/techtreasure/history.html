@@ -1,5 +1,6 @@
 {% extends 'techtreasure/base.html' %}
 {% load staticfiles %}
+{% load techtreasure_template_tags %}
 
 {% block title_block %}
     User History
@@ -10,7 +11,36 @@
 {% endblock %}
 
 {% block body_block %}
-    <div>
-        <h1>history</h1>
+<div class="container-xl"> 
+    <div class="row mx-auto"> 
+        <div class="col-6"> 
+            <div class="card text-center">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Past Listings</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        {% for listing in listings %}
+                            <li class="list-group-item"><a href="{% url 'techtreasure:show_listing' listing.category.slug listing.id %}" class="text-decoration-none">{{ listing.name }}</a> </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="card text-center"> 
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Past Offers</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        {% for offer in offers %}
+                            <li class="list-group-item"><a href="{% url 'techtreasure:show_listing' offer.listing.category.slug offer.listing.id %}" class="text-decoration-none">{{ offer.listing.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
 {% endblock %}

@@ -148,6 +148,7 @@ def searchlistings(request):
     response = render(request, 'techtreasure/searchlistings.html', context=context_dict)
     return response
 
+@login_required
 def add_listing(request):
     if request.method == 'POST':
         form = MakeListingForm(request.POST)
@@ -239,6 +240,7 @@ def dashboard_view(request):
     }
     return render(request, 'techtreasure/dashboard.html', context)
 
+@login_required
 def settings(request):
     if request.method == 'POST':
         name = request.POST.get('name')
@@ -252,3 +254,15 @@ def settings(request):
             return JsonResponse({"message": "User does not exist", "code": 400})
 
     return render(request, 'techtreasure/password_change_form.html')
+
+@login_required
+def history(request):
+     # Get active listings
+    old_listings = Listing.objects.filter(itemsold=True, users=request.user)
+
+    # Get active offers
+    all_sold_listings = Listing.objects.filter(itemsold=True)
+    old_offers = Offer.objects.filter(users=request.user, listing__in=all_sold_listings)
+
+    context = {'listings': old_listings, 'offers': old_offers}
+    return render(request, 'techtreasure/history.html', context)

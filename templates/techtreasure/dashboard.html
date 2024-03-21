@@ -1,52 +1,28 @@
 {% extends 'techtreasure/base.html' %}
 {% load static %}
+{% load techtreasure_template_tags %}
 
 {% block title_block %}
     Dashboard
 {% endblock %}
 
 {% block heading_block %}
-    Welcome, {{ user.first_name }}
 {% endblock %}
 
 {% block extra_block %}
-    <a href="{% url 'techtreasure:settings' %}">Settings</a>
-    <a href="#">History</a>
+<h1>Welcome, {{ user.first_name }}</h1>
+    <div class="float-end">
+        
+        <a href="{% url 'techtreasure:settings' %}">Settings</a>
+        <a href="{% url 'techtreasure:history' %}">History</a>
+    </div>
+    
 {% endblock %}
 
 {% block body_block %}
-
-    <div class="container-xl"> 
-        <div class="row mx-auto"> 
-            <div class="col-6"> 
-                <div class="card text-center">
-                    <div class="card-header">
-                        <h5 class="card-title mb-0">Active Listings</h5>
-                    </div>
-                    <div class="card-body">
-                        <ul class="list-group">
-                            {% for listing in active_listings %}
-                                <li class="list-group-item"><a href="{% url 'techtreasure:show_listing' listing.category.slug listing.id %}" class="text-decoration-none">{{ listing.name }}</a> </li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6">
-                <div class="card text-center"> 
-                    <div class="card-header">
-                        <h5 class="card-title mb-0">Active Offers</h5>
-                    </div>
-                    <div class="card-body">
-                        <ul class="list-group">
-                            {% for offer in active_offers %}
-                                    <li class="list-group-item"><a href="{% url 'techtreasure:show_listing' offer.listing.category.slug offer.listing.id %}" class="text-decoration-none">{{ offer.listing.name }}</a></li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <h3>Current Listings</h3>
+    {% get_recent_listings active_listings %}
+    <h3>Current Offers</h3>
+    {% get_offer_listings active_offers %}
 {% endblock %}
 

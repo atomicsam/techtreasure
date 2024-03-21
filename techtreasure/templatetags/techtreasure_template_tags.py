@@ -1,5 +1,5 @@
 from django import template
-from techtreasure.models import Category, Listing
+from techtreasure.models import Category, Listing, Offer
 
 register = template.Library()
 
@@ -18,3 +18,8 @@ def get_recent_listings(listings):
 @register.inclusion_tag('techtreasure/navbar_dropdown.html')
 def get_all_categories():
     return {'categories': Category.objects.all().order_by("name")}
+
+@register.inclusion_tag('techtreasure/list_listings.html')
+def get_offer_listings(offers):
+    listings = Listing.objects.filter(id__in=offers.values("listing"))
+    return {'listings': listings}

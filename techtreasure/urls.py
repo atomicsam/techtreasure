@@ -22,6 +22,6 @@ urlpatterns = [
     path('dashboard/', views.dashboard_view, name='dashboard'),
     path('logout/', views.user_logout, name='logout'),
     path('settings/', views.settings, name='settings'),
-    
+    path('history/', views.history, name='history'),
     
 ]
