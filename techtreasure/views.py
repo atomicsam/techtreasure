@@ -1,16 +1,16 @@
 from django.shortcuts import render
 from django.db.models import Count
 from techtreasure.models import Category, Listing, User, Offer, UserProfile
-from techtreasure.forms import CategoryForm
 from django.shortcuts import redirect
 from django.http import HttpResponse
 from datetime import datetime
-from techtreasure.forms import UserForm, UserProfileForm
+from techtreasure.forms import UserForm, UserProfileForm, MakeListingForm
 from django.urls import reverse
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
 from techtreasure.bing_search import run_query
 from techtreasure.models import Listing
+from django.http import JsonResponse
 
 
 # Create your views here.
@@ -73,8 +73,10 @@ def show_listing(request, category_name_slug, listing_id):
     try:
         listing = Listing.objects.get(id=listing_id)
         context_dict['listing'] = listing
+        context_dict['offer'] = Offer.objects.filter(listing=listing)
     except Listing.DoesNotExist:
         context_dict['listing'] = None
+        context_dict['offer'] = None
 
     if context_dict['listing']==None:
         response = render(request, 'techtreasure/404_page.html')
@@ -100,25 +102,24 @@ def register(request):
     registered = False
     if request.method == 'POST':
         user_form = UserForm(request.POST)
-        profile_form = UserProfileForm(request.POST)
+        # profile_form = UserProfileForm(request.POST)
         
-        if user_form.is_valid() and profile_form.is_valid():
+        if user_form.is_valid():
             user = user_form.save()
             user.set_password(user.password)
             user.save()
         
-            profile = profile_form.save(commit=False)
-            profile.user = user
-            profile.save()
+            # profile = profile_form.save(commit=False)
+            # profile.user = user
+            # user.save()
 
             registered = True
         else:
-            print(user_form.errors, profile_form.errors)
+            print(user_form.non_field_errors)
     else:
         user_form = UserForm()
-        profile_form = UserProfileForm()
 
-    return render(request, 'techtreasure/signup.html', {'user_form': user_form, 'profile_form': profile_form, 'registered': registered})
+    return render(request, 'techtreasure/signup.html', {'user_form': user_form, 'registered': registered})
 
    
 
@@ -148,15 +149,22 @@ def searchlistings(request):
     return response
 
 def add_listing(request):
-    form = CategoryForm()
     if request.method == 'POST':
-        form = CategoryForm(request.POST)
+        form = MakeListingForm(request.POST)
         if form.is_valid():
-            form.save(commit=True)
+            listing_form = form.save(commit=False)
+            listing_form.users = request.user
+            listing_form.itemsold = False
+            listing_form.creation_date = str(datetime.now())
+            listing_form.picture_field = request.FILES['picture_field']
+
+            listing_form.save()
             return redirect('/techtreasure/')
         else:
             print(form.errors)
-    return render(request, 'techtreasure/makelisting.html', {'form': form})
+    else:
+        form = MakeListingForm()
+    return render(request, 'techtreasure/add_listing.html', {'form': form})
 
 def profile(request):
     user_name = request.session.get('user_name', 'Anonymous')
@@ -216,15 +224,31 @@ def user_logout(request):
     # Take the user back to the homepage.
     return redirect(reverse('techtreasure:home'))
 
+@login_required
 def dashboard_view(request):
     # Get active listings
-    active_listings = Listing.objects.filter(itemsold=False)
+    active_listings = Listing.objects.filter(itemsold=False, users=request.user)
 
     # Get active offers
-    active_offers = Offer.objects.all()  # You might need to filter based on some condition
+    all_active_listings = Listing.objects.filter(itemsold=False)
+    active_offers = Offer.objects.filter(users=request.user, listing__in=all_active_listings)
 
     context = {
         'active_listings': active_listings,
         'active_offers': active_offers,
     }
     return render(request, 'techtreasure/dashboard.html', context)
+
+def settings(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        old_pwd = request.POST.get('old_pwd')
+        new_pwd = request.POST.get('new_pwd')
+        user_obj = User.objects.filter(username=name, password=old_pwd).values("id", "username", "password").first()
+        if user_obj:
+            User.objects.filter(id=user_obj.get("id", None)).update(password=new_pwd)
+            return JsonResponse({"message": "Password updated successfully", "code": 200})
+        else:
+            return JsonResponse({"message": "User does not exist", "code": 400})
+
+    return render(request, 'techtreasure/password_change_form.html')

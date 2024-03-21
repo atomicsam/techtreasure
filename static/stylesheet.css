@@ -83,3 +83,7 @@ div.col-md-6:nth-child(1) {
   padding-left: 0px;
   max-height: 300px; text-align: center;
 }
+
+.listing-page {
+  width: 500px;
+}

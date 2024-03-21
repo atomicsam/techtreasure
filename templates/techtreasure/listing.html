@@ -5,21 +5,37 @@
     {{ listing.name }}
 {% endblock %}
 
-{% block heading_block %}
-{% endblock %}
 
 {% block body_block %}     
     <div class="container-fluid" style="clear: both;">
         <div class="row">
-            <div class="col-md-4" style="height: 300px; width:auto; text-align: center;">
-                <img class="card-img-top mb-5 mb-md-0 rounded" style="max-height: 100%; max-width: 100%;" src="/media/{{ listing.picture_field }}" alt="Picture of {{ listing.name }}" />
+            <div class="col-md-4 col-12" style="height: 300px; text-align: center;">
+                <img class="card-img-top mb-5 mb-md-0 rounded" style="max-height: 100%; max-width: 100%; width: auto" src="/media/{{ listing.picture_field }}" alt="Picture of {{ listing.name }}" />
+                {% if user.is_authenticated %}
+                    {% if user.id == listing.users.id %}
+                        {% for offer in listings.offers.all %}
+                            {{ offer.price }}
+                            {{ offer.user }}
+                        {% endfor %}
+                    {% else %}
+                        <br /><br /><button type="button" class="btn btn-primary">Make Offer</button>
+                    {% endif %}
+                {% endif %}
             </div>
-            <div class="col-md-6 text-align: center;">
+            <div class="col-md-6 col-12">
                 <h1 class="display-5 fw-bolder">{{ listing.name }}</h1>
                 <div class="fs-5 mb-5">
                     <span>Max Offer:</span>
-                    <span>£{{ listing.suggested_price }}</span>
+                    <span>£{{ listing.suggested_price }}</span> <br />
+                    {% if listing.location %}
+                        <span>Location: </span>
+                    {% else %}
+                        <span>Location: Unknown</span>
+                    {% endif %}
                 </div>
                 <p class="lead">{{ listing.description_field }}</p>
             </div>
         </div>
+        </div>
+    </div>
+{% endblock %}

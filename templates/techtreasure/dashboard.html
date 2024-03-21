@@ -6,35 +6,41 @@
 {% endblock %}
 
 {% block heading_block %}
-    Dashboard
+    Welcome, {{ user.first_name }}
+{% endblock %}
+
+{% block extra_block %}
+    <a href="{% url 'techtreasure:settings' %}">Settings</a>
+    <a href="#">History</a>
 {% endblock %}
 
 {% block body_block %}
-    <div class="container-xl"> <!-- Use "container-xl" for extra large container -->
-        <div class="row mx-auto"> <!-- Add "mx-auto" class to center horizontally -->
-            <div class="col-md-5"> <!-- Use "col-md-6" to allocate half width of the container -->
-                <div class="card text-center"> <!-- Add "text-center" class to center-align text -->
+
+    <div class="container-xl"> 
+        <div class="row mx-auto"> 
+            <div class="col-6"> 
+                <div class="card text-center">
                     <div class="card-header">
                         <h5 class="card-title mb-0">Active Listings</h5>
                     </div>
                     <div class="card-body">
                         <ul class="list-group">
                             {% for listing in active_listings %}
-                                <li class="list-group-item">{{ listing.name }}</li>
+                                <li class="list-group-item"><a href="{% url 'techtreasure:show_listing' listing.category.slug listing.id %}" class="text-decoration-none">{{ listing.name }}</a> </li>
                             {% endfor %}
                         </ul>
                     </div>
                 </div>
             </div>
-            <div class="col-md-5"> <!-- Use "col-md-6" to allocate half width of the container -->
-                <div class="card text-center"> <!-- Add "text-center" class to center-align text -->
+            <div class="col-6">
+                <div class="card text-center"> 
                     <div class="card-header">
                         <h5 class="card-title mb-0">Active Offers</h5>
                     </div>
                     <div class="card-body">
                         <ul class="list-group">
                             {% for offer in active_offers %}
-                                <li class="list-group-item">{{ offer.listing.name }}</li>
+                                    <li class="list-group-item"><a href="{% url 'techtreasure:show_listing' offer.listing.category.slug offer.listing.id %}" class="text-decoration-none">{{ offer.listing.name }}</a></li>
                             {% endfor %}
                         </ul>
                     </div>

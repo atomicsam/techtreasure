@@ -21,7 +21,7 @@ class Category(models.Model):
     
 class Listing(models.Model):
     name = models.CharField(max_length=50)
-    picture_field = models.ImageField()
+    picture_field = models.ImageField(upload_to='listings')
     suggested_price = models.DecimalField(max_digits=5, decimal_places=2)
     itemsold = models.BooleanField()
     creation_date = models.DateTimeField()
@@ -29,6 +29,7 @@ class Listing(models.Model):
     num_of_views = models.IntegerField(default=0)
     location = models.CharField(max_length=100)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    users = models.ForeignKey(User, on_delete=models.CASCADE, related_name='listings') 
 
     def __str__(self):
         return self.name
@@ -37,12 +38,11 @@ class Offer(models.Model):
     price = models.DecimalField(max_digits=5, decimal_places=2)
     offer_date = models.DateTimeField()
     listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
-    users = models.ForeignKey(User, on_delete=models.CASCADE)
+    users = models.ForeignKey(User, on_delete=models.CASCADE, related_name="offers")
     
 class UserProfile(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-
     first_name = models.CharField(max_length=30, blank=False)
     last_name = models.CharField(max_length=30, blank=False)
     
