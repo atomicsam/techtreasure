@@ -18,13 +18,17 @@
                 <div class="card-header">
                     <h5 class="card-title mb-0">Past Listings</h5>
                 </div>
-                <div class="card-body">
-                    <ul class="list-group">
-                        {% for listing in listings %}
-                            <li class="list-group-item"><a href="{% url 'techtreasure:show_listing' listing.category.slug listing.id %}" class="text-decoration-none">{{ listing.name }}</a> </li>
-                        {% endfor %}
-                    </ul>
-                </div>
+                {% if listings %}
+                    <div class="card-body">
+                        <ul class="list-group">
+                            {% for listing in listings %}
+                                <li class="list-group-item"><a href="{% url 'techtreasure:show_listing' listing.category.slug listing.id %}" class="text-decoration-none">{{ listing.name }}</a> </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% else %}
+                    You haven't made any listings
+                {% endif %}
             </div>
         </div>
         <div class="col-6">

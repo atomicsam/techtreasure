@@ -1,10 +1,15 @@
 {% extends 'techtreasure/base.html' %}
 {% load static %}
+{% load techtreasure_template_tags %}
 
 {% block title_block %}
-    {{ category.name }} Listings
+    All Listings
 {% endblock %}
 
 {% block heading_block %}
-    All {{ category.name }} Listings
+    All Listings
+{% endblock %}
+
+{% block body_block %}
+    {% get_recent_listings %}
 {% endblock %}

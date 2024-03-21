@@ -1,10 +1,10 @@
 from django.shortcuts import render
 from django.db.models import Count
-from techtreasure.models import Category, Listing, User, Offer, UserProfile
+from techtreasure.models import Category, Listing, User, Offer
 from django.shortcuts import redirect
 from django.http import HttpResponse
 from datetime import datetime
-from techtreasure.forms import UserForm, UserProfileForm, MakeListingForm
+from techtreasure.forms import UserForm, MakeListingForm, MakeOfferForm
 from django.urls import reverse
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
@@ -16,7 +16,7 @@ from django.http import JsonResponse
 # Create your views here.
 def home(request):
     category_list = Category.objects.annotate(number_of_listings=Count('listing')).order_by('-number_of_listings')[:4]
-    recent_listings = Listing.objects.order_by('-creation_date')[:4]
+    recent_listings = Listing.objects.filter(itemsold=False).order_by('-creation_date')[:4]
     
     context_dict = {}
     context_dict['categories'] = category_list
@@ -77,17 +77,30 @@ def show_listing(request, category_name_slug, listing_id):
     except Listing.DoesNotExist:
         context_dict['listing'] = None
         context_dict['offer'] = None
-
+    if request.method == "POST":
+        form = MakeOfferForm(request.POST)
+        if form.is_valid():
+            offer_form = form.save(commit=False)
+            offer_form.offer_date = str(datetime.now())
+            offer_form.users = request.user
+            offer_form.listing_id = listing_id
+            offer_form.save()
+        else:
+            print(form.errors)
+        context_dict['form'] = form
+    else:
+        form = MakeOfferForm()
     if context_dict['listing']==None:
         response = render(request, 'techtreasure/404_page.html')
     else:
         response = render(request, 'techtreasure/listing.html', context=context_dict)
+    
     return response
 
 def all_listings(request):
     context_dict = {}
     try:
-        listing = Listing.objects.all()
+        listing = Listing.objects.filter(itemsold=False)
         context_dict['listing'] = listing
     except Listing.DoesNotExist:
         context_dict['listing'] = None
@@ -102,16 +115,11 @@ def register(request):
     registered = False
     if request.method == 'POST':
         user_form = UserForm(request.POST)
-        # profile_form = UserProfileForm(request.POST)
         
         if user_form.is_valid():
             user = user_form.save()
             user.set_password(user.password)
             user.save()
-        
-            # profile = profile_form.save(commit=False)
-            # profile.user = user
-            # user.save()
 
             registered = True
         else:

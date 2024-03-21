@@ -1,5 +1,5 @@
 from django import forms
-from techtreasure.models import Listing, Category, UserProfile
+from techtreasure.models import Listing, Category, Offer
 from django.contrib.auth.models import User
 from datetime import datetime
 
@@ -40,9 +40,9 @@ class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
     class Meta:
         model = User
-        fields = ('username', 'password', 'first_name', 'last_name')
+        fields = ('username', 'first_name', 'last_name', 'password')
 
-class UserProfileForm(forms.ModelForm):
+class MakeOfferForm(forms.ModelForm):
     class Meta:
-        model = UserProfile
-        fields = ('first_name', 'last_name',)
+        model = Offer
+        fields = ('price',)

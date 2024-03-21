@@ -20,7 +20,7 @@ class Category(models.Model):
         return self.name
     
 class Listing(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, null=False)
     picture_field = models.ImageField(upload_to='listings')
     suggested_price = models.DecimalField(max_digits=5, decimal_places=2)
     itemsold = models.BooleanField()
@@ -29,16 +29,28 @@ class Listing(models.Model):
     num_of_views = models.IntegerField(default=0)
     location = models.CharField(max_length=100)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    users = models.ForeignKey(User, on_delete=models.CASCADE, related_name='listings') 
+    users = models.ForeignKey(User, on_delete=models.CASCADE, related_name='listings')
 
     def __str__(self):
-        return self.name
+        return self.id
+    
+    def get_highest_offer(self):
+        highest_offers = Offer.objects.filter(listing=self).order_by('-price')
+        num_offers = Offer.objects.filter(listing=self).count()
+        if num_offers==0:
+            print(self.suggested_price)
+            return self.suggested_price
+        return highest_offers[0].price
+    
+    def get_offers(self):
+        return Offer.objects.filter(listing=self)
 
 class Offer(models.Model):
-    price = models.DecimalField(max_digits=5, decimal_places=2)
+    price = models.DecimalField(max_digits=5, decimal_places=2, null=False)
     offer_date = models.DateTimeField()
     listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
     users = models.ForeignKey(User, on_delete=models.CASCADE, related_name="offers")
+
     
 class UserProfile(models.Model):
 

@@ -9,24 +9,57 @@
 {% block body_block %}     
     <div class="container-fluid" style="clear: both;">
         <div class="row">
-            <div class="col-md-4 col-12" style="height: 300px; text-align: center;">
-                <img class="card-img-top mb-5 mb-md-0 rounded" style="max-height: 100%; max-width: 100%; width: auto" src="/media/{{ listing.picture_field }}" alt="Picture of {{ listing.name }}" />
+            <div class="col-md-4 col-12" style="text-align: center;">
+                <img class="card-img-top mb-5 mb-md-0 rounded" style="max-height: 300px; max-width: 100%; width: auto" src="/media/{{ listing.picture_field }}" alt="Picture of {{ listing.name }}" />
                 {% if user.is_authenticated %}
                     {% if user.id == listing.users.id %}
-                        {% for offer in listings.offers.all %}
-                            {{ offer.price }}
-                            {{ offer.user }}
-                        {% endfor %}
+                        
+                    
+                    <div class="row mx-auto"> 
+                        <div class="col-12"> 
+                            <div class="card text-center">
+                                <div class="card-header">
+                                    <h5 class="card-title mb-0">Current Listings</h5>
+                                </div>
+                                <div class="card-body">
+                                    <ul class="list-group">
+                                        {% if listing.get_offers %}
+                                            {% for offer in listing.get_offers %}
+                                                <li class="list-group-item">{{ offer.users.username }}: {{ offer.price }}
+                                                    <button type="submit" class="btn btn-primary">Accept Offer</button></li>
+                                            {% endfor %}
+                                        {% else %}
+                                            No offers yet
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     {% else %}
-                        <br /><br /><button type="button" class="btn btn-primary">Make Offer</button>
-                    {% endif %}
+                        <div class="p-4">
+                            <form id="login_form" method="post" action="{% url 'techtreasure:show_listing' listing.category.slug listing.id %}">
+                            {% csrf_token %}
+                            <div class="d-flex justify-content-evenly">
+                                                            <p class="float-start">Price:</p><br />
+                            <div>
+                                £<input type="text" name="price" value="" size="5" />
+                            </div>
+                            <button type="submit" class="btn btn-primary">Make Offer</button>
+                            </div>
+
+                            </form>
+                    </div>
+                   {% endif %}            
+                {% else %}
+                    Login to make and view offers!
                 {% endif %}
             </div>
             <div class="col-md-6 col-12">
                 <h1 class="display-5 fw-bolder">{{ listing.name }}</h1>
                 <div class="fs-5 mb-5">
                     <span>Max Offer:</span>
-                    <span>£{{ listing.suggested_price }}</span> <br />
+                    <span>£{{ listing.get_highest_offer }}</span> <br />
                     {% if listing.location %}
                         <span>Location: </span>
                     {% else %}
