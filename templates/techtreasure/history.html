@@ -27,7 +27,7 @@
                         </ul>
                     </div>
                 {% else %}
-                    You haven't made any listings
+                    You haven't made a listing yet
                 {% endif %}
             </div>
         </div>
@@ -36,13 +36,17 @@
                 <div class="card-header">
                     <h5 class="card-title mb-0">Past Offers</h5>
                 </div>
-                <div class="card-body">
-                    <ul class="list-group">
-                        {% for offer in offers %}
-                            <li class="list-group-item"><a href="{% url 'techtreasure:show_listing' offer.listing.category.slug offer.listing.id %}" class="text-decoration-none">{{ offer.listing.name }}</a></li>
-                        {% endfor %}
-                    </ul>
-                </div>
+                {% if offers %}
+                    <div class="card-body">
+                        <ul class="list-group">
+                                {% for offer in offers %}
+                                    <li class="list-group-item"><a href="{% url 'techtreasure:show_listing' offer.listing.category.slug offer.listing.id %}" class="text-decoration-none">{{ offer.listing.name }}</a></li>
+                                {% endfor %}
+                        </ul>
+                    </div>
+                {% else %}
+                    You haven't made an offer yet
+                {% endif %}
             </div>
         </div>
     </div>

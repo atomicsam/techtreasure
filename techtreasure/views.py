@@ -55,7 +55,7 @@ def show_category(request, category_name_slug):
 
     try:
         category = Category.objects.get(slug=category_name_slug)
-        listings = Listing.objects.filter(category=category)
+        listings = Listing.objects.filter(category=category, itemsold=False)
         context_dict['listings'] = listings
         context_dict['category'] = category
     except Category.DoesNotExist:

@@ -37,6 +37,9 @@
                         </div>
                     </div>
                     {% else %}
+                        {% if listing.itemsold %}
+                            No more offers as this item is already sold!
+                        {% else %}
                         <div class="p-4">
                             <form id="login_form" method="post" action="{% url 'techtreasure:show_listing' listing.category.slug listing.id %}">
                             {% csrf_token %}
@@ -50,14 +53,21 @@
 
                             </form>
                     </div>
-                   {% endif %}            
+                    {% endif %}            
                 {% else %}
-                    Login to make and view offers!
+                    {% if listing.itemsold %}
+                        Item has been sold! But login to create your own list and make offers on other items
+                    {% else %}
+                        Login to make and view offers!
+                    {% endif %}
                 {% endif %}
             </div>
             <div class="col-md-6 col-12">
                 <h1 class="display-5 fw-bolder">{{ listing.name }}</h1>
                 <div class="fs-5 mb-5">
+                    {% if listing.itemsold %}
+                        <b>SOLD</b>
+                    {% endif %}
                     <span>Max Offer:</span>
                     <span>£{{ listing.get_highest_offer }}</span> <br />
                     {% if listing.location %}
