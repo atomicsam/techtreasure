@@ -19,10 +19,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="61bc9ce2-6943-42c2-876f-d803e6d612b7" name="默认的" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/team_project/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/team_project/settings.py" afterDir="false" />
-    </list>
+    <list default="true" id="61bc9ce2-6943-42c2-876f-d803e6d612b7" name="默认的" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

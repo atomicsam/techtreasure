@@ -2,6 +2,7 @@ import datetime
 import os
 from math import ceil
 
+from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.core.files.storage import default_storage
 from django.core.paginator import Paginator
@@ -17,9 +18,10 @@ def change_password(request):
         name = request.POST.get('name')
         old_pwd = request.POST.get('old_pwd')
         new_pwd = request.POST.get('new_pwd')
-        user_obj = User.objects.filter(username=name, password=old_pwd).values("id", "username", "password").first()
-        if user_obj:
-            User.objects.filter(id=user_obj.get("id", None)).update(password=new_pwd)
+        user = authenticate(username=name, password=old_pwd)
+        if user:
+            user.set_password(new_pwd)
+            user.save()
             return JsonResponse({"message": "Password updated successfully", "code": 200})
         else:
             return JsonResponse({"message": "User does not exist", "code": 400})
