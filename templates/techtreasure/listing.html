@@ -1,84 +1,115 @@
 {% extends 'techtreasure/base.html' %}
 {% load staticfiles %}
 
-{% block title_block %}
-    {{ listing.name }}
-{% endblock %}
+{% block body_block %}
+    <body>
+    <div class="item-container">
 
-
-{% block body_block %}     
-    <div class="container-fluid" style="clear: both;">
-        <div class="row">
-            <div class="col-md-4 col-12" style="text-align: center;">
-                <img class="card-img-top mb-5 mb-md-0 rounded" style="max-height: 300px; max-width: 100%; width: auto" src="/media/{{ listing.picture_field }}" alt="Picture of {{ listing.name }}" />
-                {% if user.is_authenticated %}
-                    {% if user.id == listing.users.id %}
-                        
-                    
-                    <div class="row mx-auto"> 
-                        <div class="col-12"> 
-                            <div class="card text-center">
-                                <div class="card-header">
-                                    <h5 class="card-title mb-0">Current Listings</h5>
-                                </div>
-                                <div class="card-body">
-                                    <ul class="list-group">
-                                        {% if listing.get_offers %}
-                                            {% for offer in listing.get_offers %}
-                                                <li class="list-group-item">{{ offer.users.username }}: {{ offer.price }}
-                                                    <button type="submit" class="btn btn-primary">Accept Offer</button></li>
-                                            {% endfor %}
-                                        {% else %}
-                                            No offers yet
-                                        {% endif %}
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {% else %}
-                        {% if listing.itemsold %}
-                            No more offers as this item is already sold!
-                        {% else %}
-                        <div class="p-4">
-                            <form id="login_form" method="post" action="{% url 'techtreasure:show_listing' listing.category.slug listing.id %}">
-                            {% csrf_token %}
-                            <div class="d-flex justify-content-evenly">
-                                                            <p class="float-start">Price:</p><br />
-                            <div>
-                                £<input type="text" name="price" value="" size="5" />
-                            </div>
-                            <button type="submit" class="btn btn-primary">Make Offer</button>
-                            </div>
-
-                            </form>
-                    </div>
-                    {% endif %}            
-                {% else %}
-                    {% if listing.itemsold %}
-                        Item has been sold! But login to create your own list and make offers on other items
-                    {% else %}
-                        Login to make and view offers!
-                    {% endif %}
-                {% endif %}
-            </div>
-            <div class="col-md-6 col-12">
-                <h1 class="display-5 fw-bolder">{{ listing.name }}</h1>
-                <div class="fs-5 mb-5">
-                    {% if listing.itemsold %}
-                        <b>SOLD</b>
-                    {% endif %}
-                    <span>Max Offer:</span>
-                    <span>£{{ listing.get_highest_offer }}</span> <br />
-                    {% if listing.location %}
-                        <span>Location: </span>
-                    {% else %}
-                        <span>Location: Unknown</span>
-                    {% endif %}
-                </div>
-                <p class="lead">{{ listing.description_field }}</p>
-            </div>
         </div>
-        </div>
+    <div class="paging">
+        <div class="pre">previous page</div>
+        <div class="page">current page：1</div>
+        <div class="next">next page</div>
     </div>
+    <script>
+        var count = 0
+        var currentPage = 1;
+        var pageSize = 10
+        function getHistoryRecords(page, limit) {
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET",  "/login/userprofile/get_history/?page=" + page + "&limit=" + limit, true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    count = response.count_num
+                    displayHistoryRecords(response.data);
+                }
+            };
+            xhr.send();
+        }
+
+        function displayHistoryRecords(records) {
+            var container = document.getElementsByClassName("item-container")[0];
+            container.innerHTML = "";
+            console.log(container)
+
+            for (var i = 0; i < records.length; i++) {
+                var record = records[i];
+                var recordElement = document.createElement("div");
+                recordElement.className = 'item'
+                recordElement.innerHTML = "<p><img src='" + {{ MEDIA_URL }}+record.file_image + "' alt='" + record.name + "'></p>"+
+                                           "<p>Name: " + record.name + ",Price: " + record.price + "</p>" ;
+                container.appendChild(recordElement);
+            }
+        }
+
+        window.onload = function() {
+            getHistoryRecords(currentPage, pageSize);
+        };
+
+
+            let pageElement = document.querySelector(".page");
+
+        let nextButton = document.querySelector('.next')
+        nextButton.onclick = function (){
+            if (currentPage < count) {
+                     currentPage++;
+                    pageElement.textContent = "current page：" + currentPage;
+                    getHistoryRecords(currentPage, pageSize);
+                }
+        }
+        let preButton = document.querySelector('.pre')
+        preButton.onclick = function (){
+           if (currentPage > 1) {
+                    currentPage--;
+                    pageElement.textContent = "current page：" + currentPage;
+               getHistoryRecords(currentPage, pageSize);
+                }
+        }
+
+    </script>
+    </body>
+    <style>
+
+.item-container{
+    display: flex;
+    flex-wrap: wrap;
+    {#justify-content: space-around;#}
+}
+        .item-container .item {
+            display: inline-block;
+            width: 18.5%;
+            {#height: 300px;#}
+            margin-bottom: 22px;
+            margin-right: 20px
+        }
+
+        .item-container .item:nth-child(5n) {
+            margin-right: 0;
+        }
+
+        .item-container .item img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .paging {
+            display: flex;
+            align-items: center;
+            justify-content: end;
+            padding: 10px 0;
+        }
+
+        .page {
+            margin: 0 10px;
+        }
+
+        .pre {
+            cursor: pointer;
+        }
+
+        .next {
+            cursor: pointer;
+        }
+    </style>
 {% endblock %}
