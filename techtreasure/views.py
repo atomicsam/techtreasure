@@ -77,7 +77,7 @@ def show_category(request, category_name_slug):
 def show_listing(request, category_name_slug, listing_id):
     context_dict = {}
     try:
-        listing = Listing.objects.get(id=listing_id, itemsold=False)
+        listing = Listing.objects.get(id=listing_id)
         context_dict['listing'] = listing
         context_dict['offer'] = Offer.objects.filter(listing=listing)
     except Listing.DoesNotExist:

@@ -39,7 +39,7 @@
                             <br/>No more offers as this item is already sold!
                         {% else %}
                         <div class="p-4">
-                            <form id="login_form" method="post" action="{% url 'techtreasure:show_listing' listing.category.slug listing.id %}"></form>
+                            <form id="login_form" method="post" action="{% url 'techtreasure:show_listing' listing.category.slug listing.id %}">
                             {% csrf_token %}
                             <div class="d-flex justify-content-evenly">
                                                             <p class="float-start">Price:</p><br />
