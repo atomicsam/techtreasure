@@ -1,5 +1,5 @@
 {% extends 'techtreasure/base.html' %}
-{% load staticfiles %}
+{% load static %}
 
 {% block title_block %}
 Search
@@ -13,21 +13,14 @@ Search
 </div>
 
 <div class="container">
-  <div class="row justify-content-center">
-    <div class="col-md-8">
-      <div class="card">
-        <div class="card-header">Search Form</div>
-        <div class="card-body">
-          <form class="form-inline" id="search-form" method="get" action="{% url 'searchlistings' %}">
+  <div class="row">
+      <div class="col-md-12">
+          <form class="d-flex" id="user-form" method="post" role="search" action="{% url 'techtreasure:search' %}">
             {% csrf_token %}
-            <div class="form-group">
-              <input class="form-control" type="text" size="50" name="q" id="query" placeholder="Search...">
-            </div>
-            <button class="btn btn-primary" type="submit">Search</button>
+              <input class="form-control me-2" type="text" name="query" id="query" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-success" name="submit" type="submit">Search</button>
           </form>
-        </div>
       </div>
-    </div>
   </div>
 </div>
 
@@ -39,11 +32,11 @@ Search
     <div class="list-group-item">
       <h3 class="list-group-item-heading">
         <a href="{{ result.link }}">
-          {{ result.title|safe|escape }}
+          {{ result.title|safe }}
         </a>
       </h3>
       <p class="list-group-item-text">
-        {{ result.summary|safe|escape }}
+        {{ result.summary|safe }}
       </p>
     </div>
     {% endfor %}

@@ -1,5 +1,6 @@
 {% extends 'techtreasure/base.html' %}
 {% load staticfiles %}
+{% load crispy_forms_tags %}
 
 {% block title_block %}
     Sign Up
@@ -17,13 +18,12 @@
             enctype="multipart/form-data">
             {% csrf_token %}
             <!-- Display each form -->
-            {{ user_form.as_p }}
-            {{ profile_form.as_p }}
-            <!-- Provide a button to click to submit the form. -->
-            <p>Already have an account? <a href="{% url 'techtreasure:user_login' %}">Login</a></p>
-            <input type="submit" name="submit" value="Register" />
+            {{ user_form|crispy }}
+            {{ profile_form|crispy }}
+            <!-- Provide a button to click to submit the form. --><br />
+            <input type="submit" class="btn btn-primary" name="submit" value="Register" />
         </form>
-        
+        <p>Already have an account? <a href="{% url 'techtreasure:register' %}"></a></p>
     {% endif %}
     </div>  
 

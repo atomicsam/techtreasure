@@ -1,5 +1,6 @@
 {% extends 'techtreasure/base.html' %}
 {% load staticfiles %}
+{% load crispy_forms_tags %}
 
 {% block title_block %}
     Make Listing
@@ -10,17 +11,9 @@
     <h1>Create a New Listing</h1>
     <form id="category_form" method="post" action="{% url 'techtreasure:add_listing'%} " enctype="multipart/form-data">
         {% csrf_token %}
-        {% for hidden in form.hidden_fields %}
-            {{ hidden }}
-        {% endfor %}
-        {% for field in form.visible_fields %}
-            {{ field.errors }}
-            {{ field.help_text }}
-            {{ field.label_tag }} <br /> {{ field }} <br />
-        {% endfor %}
-        <br />
-        <input type="submit" name="submit" class="btn btn-primary" value="Create Listing" />
-    </form>
+        {{ form|crispy }}<br />
+        <button type="submit" name="submit" value="Create Listing" class="btn btn-primary">Create Listing</button>
+      </form>
     <br />
 </div>
 {% endblock %}

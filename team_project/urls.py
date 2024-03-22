@@ -19,12 +19,11 @@ from django.urls import include
 from django.conf import settings
 from django.conf.urls.static import static
 from techtreasure import views
+from django.conf import settings
+from django.conf.urls.static import static
 
-urlpatterns = [
-    #path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
-   
+urlpatterns = [   
     path('', views.home, name='home'),
     path('techtreasure/', include('techtreasure.urls')),
     path('admin/', admin.site.urls),
-    path('login/', include("login.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

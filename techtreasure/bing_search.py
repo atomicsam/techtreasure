@@ -14,11 +14,11 @@ def read_bing_key():
     bing_api_key = None
     try:
         with open('bing.key','r') as f:
-            bing_api_key = f.readline().strip()
+            bing_api_key = f.read()
     except:
         try:
             with open('../bing.key') as f:
-                bing_api_key = f.readline().strip()
+                bing_api_key = f.read()
         except:
             raise IOError('bing.key file not found')
 
@@ -34,7 +34,7 @@ def run_query(search_terms):
     """
     bing_key = read_bing_key()
     search_url = 'https://api.bing.microsoft.com/v7.0/search'
-    headers = {'Ocp-Apim-Subscription-Key': "f1a3601ba1d2489b899cb45b58fd67f0"}
+    headers = {'Ocp-Apim-Subscription-Key': bing_key}
     params = {'q': search_terms, 'textDecorations': 'True', 'textFormat': 'HTML'}
 
     # Issue the request, given the details above.

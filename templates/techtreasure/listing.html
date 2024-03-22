@@ -39,7 +39,7 @@
                             <br/>No more offers as this item is already sold!
                         {% else %}
                         <div class="p-4">
-                            <form id="login_form" method="post" action="{% url 'techtreasure:show_listing' listing.category.slug listing.id %}">
+                            <form id="login_form" method="post" action="{% url 'techtreasure:show_listing' listing.category.slug listing.id %}"></form>
                             {% csrf_token %}
                             <div class="d-flex justify-content-evenly">
                                                             <p class="float-start">Price:</p><br />
@@ -69,7 +69,6 @@
                         <span>Max Offer:</span>
                         <span>£{{ listing.suggested_price }}</span> <br />
                     {% else %}
-                        <b>SOLD</b><br/>
                         <span>Max Offer:</span>
                         <span>£{{ listing.get_highest_offer }}</span> <br />
                     {% endif %}
@@ -80,7 +79,8 @@
                         <span>Location: Unknown</span>
                     {% endif %}
                 </div>
-                <p class="lead">{{ listing.description_field }}</p>
-            </div>
+                    <h3>Description</h3>
+                    <p class="lead">{{ listing.description_field }}</p>
+                </div>
         </div>
 {% endblock %}

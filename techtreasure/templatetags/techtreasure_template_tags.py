@@ -9,7 +9,7 @@ def get_category_list(categories=Category.objects.all()):
 
 @register.inclusion_tag('techtreasure/list_listings.html')
 def get_category_listings_list(category=None, listings=None):
-    return {'listings': Listing.objects.filter(category=category)}
+    return {'listings': Listing.objects.filter(category=category, itemsold=False)}
 
 @register.inclusion_tag('techtreasure/list_listings.html')
 def get_recent_listings(listings=None, offers=None):

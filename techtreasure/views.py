@@ -75,7 +75,7 @@ def show_category(request, category_name_slug):
 def show_listing(request, category_name_slug, listing_id):
     context_dict = {}
     try:
-        listing = Listing.objects.get(id=listing_id)
+        listing = Listing.objects.get(id=listing_id, itemsold=False)
         context_dict['listing'] = listing
         context_dict['offer'] = Offer.objects.filter(listing=listing)
     except Listing.DoesNotExist:
@@ -153,12 +153,13 @@ def user_login(request):
         return render(request, 'techtreasure/login.html')
    
 def searchlistings(request):
-    query = request.GET.get('q', '')
-    results = []
-    if query:
-        # Perform the search query
-        results = Listing.objects.filter(name__icontains=query, itemsold=False)
-    return render(request, 'techtreasure/search_results.html', {'query': query, 'results': results})
+    result_list = []
+    if request.method == 'POST':
+        query = request.POST['query'].strip()
+        if query:
+            # Run our Bing function to get the results list!
+            result_list = run_query(query)
+    return render(request, 'techtreasure/search.html', {'result_list': result_list})
 
 
     
@@ -275,10 +276,8 @@ def settings(request):
 
 @login_required
 def history(request):
-     # Get active listings
     old_listings = Listing.objects.filter(itemsold=True, users=request.user)
 
-    # Get active offers
     all_sold_listings = Listing.objects.filter(itemsold=True)
     old_offers = Offer.objects.filter(users=request.user, listing__in=all_sold_listings)
 
@@ -289,7 +288,6 @@ def accept_offer(request):
     listing_id = request.POST.get('listing_id')
     offer_id = request.POST.get('offer_id')
     new_price = Offer.objects.get(id=offer_id).price
-    print(type(new_price))
     if listing_id:
         Listing.objects.filter(pk=listing_id).update(itemsold=True, suggested_price=int(new_price))
     
