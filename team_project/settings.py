@@ -33,7 +33,7 @@ SECRET_KEY = '_w88$3d69c86lh$mo%0wnrice32(y7y@pg96nmtfyj5uf-ex7v'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'Devansh16.pythonanywhere.com'
+    'Devansh16.pythonanywhere.com', '127.0.0.1'
 ]
 
 # Application definition
