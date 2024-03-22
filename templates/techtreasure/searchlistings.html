@@ -1,17 +1,17 @@
-{% extends 'techtreasure/base.html' %}
-{% load staticfiles %}
-
-{% block title_block %}
-    Search Listings
-{% endblock %}
-
-{% block heading_block %}
-    Search Listings
-{% endblock %}
-
-{% block body_block %}
-    <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-    </form>
-{% endblock %}
+{% extends 'techtreasure/base.html' %} {% load staticfiles %} {% block title_block %} Search Listings {% endblock %} {% block heading_block %} Search Listings {% endblock %} {% block body_block %} {% endblock %} {% block content %}
+<h2>Search Results</h2>
+<form method="post" class="d-flex" role="search">
+    {% csrf_token %}
+    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+    <button class="btn btn-outline-success" type="submit">Search</button>
+</form>
+{% if results %}
+<ul>
+    {% for result in results %}
+    <li>{{ result.name }}</li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>No results found here.</p>
+<!--use the bing search -->
+{% endif %} {% endblock %}
