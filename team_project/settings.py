@@ -32,7 +32,9 @@ SECRET_KEY = '_w88$3d69c86lh$mo%0wnrice32(y7y@pg96nmtfyj5uf-ex7v'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'Devansh16.pythonanywhere.com', '127.0.0.1'
+]
 
 # Application definition
 
