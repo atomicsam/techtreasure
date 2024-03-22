@@ -11,21 +11,29 @@ Search
     <h1 class="jumbotron-heading">Search with TechTreasure</h1>
   </div>
 </div>
-<div>
-  <form class="form-inline" id="user-form" method="post" action="{% url 'techtreasure:search' %}">
-    {% csrf_token %}
 
-    <div class="form-group">
-      <input class="form-control" type="text" size="50" name="query" id="query" />
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">Search Form</div>
+        <div class="card-body">
+          <form class="form-inline" id="search-form" method="get" action="{% url 'searchlistings' %}">
+            {% csrf_token %}
+            <div class="form-group">
+              <input class="form-control" type="text" size="50" name="q" id="query" placeholder="Search...">
+            </div>
+            <button class="btn btn-primary" type="submit">Search</button>
+          </form>
+        </div>
+      </div>
     </div>
-
-    <button class="btn btn-primary" type="submit" name="submit">Search</button>
-  </form>
+  </div>
 </div>
-<div>
+
+<div class="container mt-4">
   {% if result_list %}
   <h2>Results</h2>
-
   <div class="list-group">
     {% for result in result_list %}
     <div class="list-group-item">

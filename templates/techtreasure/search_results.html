@@ -1,0 +1,16 @@
+{% extends 'techtreasure/base.html' %}
+
+{% block content %}
+    <h1>Search Results for "{{ query }}"</h1>
+    <ul>
+    {% include 'search_bar.html' %}
+
+        {% if results %}
+            {% for listing in results %}
+                <li>{{ listing.name }}</li>
+            {% endfor %}
+        {% else %}
+            <li>No results found</li>
+        {% endif %}
+    </ul>
+{% endblock %}

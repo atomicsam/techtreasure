@@ -47,6 +47,12 @@ class MakeOfferForm(forms.ModelForm):
         model = Offer
         fields = ('price',)
 
+
+
+class SearchForm(forms.Form):
+    query = forms.CharField(label='Search', max_length=100)
+
+
 class AcceptOfferForm(forms.ModelForm):
     class Meta:
         model = Offer
