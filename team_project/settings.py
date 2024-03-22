@@ -134,3 +134,4 @@ STATIC_URL = '/static/'
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.AutoSchema'
 }
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
