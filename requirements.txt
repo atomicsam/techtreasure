@@ -1,10 +1,15 @@
+asgiref==3.8.1
+bootstrap4==0.1.0
 certifi==2024.2.2
 charset-normalizer==3.3.2
 coverage==7.4.4
-Django==2.2.28
+Django==4.2.11
+django-crispy-forms==2.1
 idna==3.6
 pillow @ file:///C:/b/abs_e22m71t0cb/croot/pillow_1707233126420/work
 pytz==2024.1
 requests==2.31.0
 sqlparse==0.4.4
+typing_extensions==4.10.0
+tzdata==2024.1
 urllib3==2.2.1
