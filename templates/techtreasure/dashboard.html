@@ -11,9 +11,9 @@
 
 {% block extra_block %}
 <h1>Welcome, {{ user.first_name }}</h1>
-    <div class="float-end">
+    <div class="float-end pe-2 text-decoration-none">
         
-        <a href="{% url 'techtreasure:change_password' %}">Settings</a>
+        <a href="{% url 'techtreasure:change_password' %}">Change Password</a>
         <a href="{% url 'techtreasure:history' %}">History</a>
     </div>
     
