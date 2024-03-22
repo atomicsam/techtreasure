@@ -295,31 +295,17 @@ def accept_offer(request):
     
     return redirect(reverse('techtreasure:home'))
 
-    offer_id = int(request.POST.get("offer"))
-    offer = Offer.objects.get(id=offer_id)
-    print(offer.listing.itemsold)
-    if request.method == "POST":
-        offer_form = get_object_or_404(Offer, id=offer_id)
-        offer_form.listing.itemsold = True
-        offer_form.listing.suggested_price = offer.price
-        offer_form.save()
-    return redirect(reverse('techtreasure:home'))
+def change_password(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        old_pwd = request.POST.get('old_pwd')
+        new_pwd = request.POST.get('new_pwd')
+        user = authenticate(username=name, password=old_pwd)
+        if user:
+            user.set_password(new_pwd)
+            user.save()
+            return JsonResponse({"message": "Password updated successfully", "code": 200})
+        else:
+            return JsonResponse({"message": "User does not exist", "code": 400})
 
-# class AcceptOfferView(View):
-#     @method_decorator(login_required)
-#     def get(self, request):
-#         if 'listing_id' in request.POST:
-#             listing_id = request.POST['listing_id']
-#         else:
-#             listing_id = False
-#         try:
-#             listing = Listing.objects.get(id=int(listing_id))
-#         except Listing.DoesNotExist:
-#             return HttpResponse(-1)
-#         except ValueError:
-#             return HttpResponse(-1)
-        
-#         listing.itemsold = True
-#         listing.save()
-        
-#         return HttpResponse(listing.itemsold)
+    return render(request, 'techtreasure/password_change_form.html')

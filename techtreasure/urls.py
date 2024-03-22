@@ -21,7 +21,7 @@ urlpatterns = [
     path('search/', views.searchlistings, name='search'),
     path('dashboard/', views.dashboard_view, name='dashboard'),
     path('logout/', views.user_logout, name='logout'),
-    path('settings/', views.settings, name='settings'),
+    path('settings/', views.change_password, name='change_password'),
     path('history/', views.history, name='history'),
     path('accept_offer/', views.accept_offer, name='accept_offer'),
     
