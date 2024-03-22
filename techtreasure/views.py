@@ -14,6 +14,8 @@ from techtreasure.models import Listing
 from django.http import JsonResponse
 from django.views.generic import View
 from django.utils.decorators import method_decorator
+from django.shortcuts import get_object_or_404, redirect
+
 
 
 
@@ -159,6 +161,20 @@ def searchlistings(request):
         # Perform the search query
         results = Listing.objects.filter(name__icontains=query, itemsold=False)
     return render(request, 'techtreasure/search_results.html', {'query': query, 'results': results})
+
+def goto(request):
+    if 'listing_id' in request.GET:  
+        listing_id = request.GET['listing_id']
+        try:
+            listing = Listing.objects.get(id=listing_id)  
+            
+            # listing.views += 1
+            # listing.save()
+            return redirect(listing.url)  
+        except Listing.DoesNotExist:
+            return redirect(reverse('techtreasure:home'))
+    else:
+        return redirect(reverse('techtreasure:home'))
 
 
     

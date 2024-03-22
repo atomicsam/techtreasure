@@ -24,5 +24,6 @@ urlpatterns = [
     path('settings/', views.change_password, name='change_password'),
     path('history/', views.history, name='history'),
     path('accept_offer/', views.accept_offer, name='accept_offer'),
+    path('goto/', views.goto, name='goto'),
     
 ]

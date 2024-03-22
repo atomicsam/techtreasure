@@ -1,12 +1,41 @@
 from django.test import TestCase,Client
 from django.urls import reverse
 from techtreasure.models import Category
+from django.utils import timezone
 
 def add_category(name, views=0):
     category = Category.objects.get_or_create(name=name)[0]
     category.views = views
     category.save()
     return category
+
+def test_listing_last_visit(self):
+    
+    listing = Listing.objects.create(...)  
+    
+    
+    self.assertTrue(listing.last_visit < timezone.now())
+
+def test_goto_view(self):
+    
+    listing = Listing.objects.create(...)  
+    
+    response = self.client.get(reverse('techtreasure:goto'), {'listing_id': listing.id})
+    
+    self.assertEqual(response.status_code, 302)
+    
+    self.assertEqual(response.url, listing.url)
+
+def test_listing_views(self):
+    
+    listing = Listing.objects.create(...)  
+    
+    self.client.get(reverse('techtreasure:goto'), {'listing_id': listing.id})
+    
+    listing.refresh_from_db()
+    
+   
+    self.assertEqual(listing.views, 1)
 
 class CategoryMethodTests(TestCase):
     def test_ensure_views_are_positive(self):
