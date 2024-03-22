@@ -2,7 +2,7 @@
 {% load static %}
 <div class="container">
     {% if listings %}
-        <div class="row g-5">
+        <div class="row g-3">
             {% for listing in listings %}
             <div class="col-md-3 col-12">    
                     <div class="card">
@@ -12,7 +12,12 @@
                             </div>
                         </a>                        
                         <div class="card-body">
-                            <a href="{% url 'techtreasure:show_listing' listing.category.slug listing.id %}" class="card-text text-center">{{ listing.name }}</a>
+                            <a href="{% url 'techtreasure:show_listing' listing.category.slug listing.id %}" class="card-text text-center fs-6">{{ listing.name }}</a>
+                           
+                            <div class="text-center fs-6"> 
+                            Max Offer: £{{ listing.get_highest_offer }}
+                            </div>
+                                
                         </div>
                     </div>
             </div>
@@ -20,5 +25,8 @@
         </div>
     {% else %}
         <strong>No listing available.</strong>
+        <br />
+        <br />
+        <br />
     {% endif %}
 </div>

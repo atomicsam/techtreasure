@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from techtreasure.models import Category, Listing, User, Offer
+from techtreasure.models import Category, Listing, UserProfile, Offer
 
 # Register your models here.
 class CategoryAdmin(admin.ModelAdmin):
@@ -9,3 +9,4 @@ class CategoryAdmin(admin.ModelAdmin):
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Listing)
 admin.site.register(Offer)
+admin.site.register(UserProfile)

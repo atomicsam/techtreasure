@@ -2,7 +2,7 @@
 {% load staticfiles %}
 
 {% block title_block %}
-    LISTING_PLACEHOLDER's
+    Make a New {{ listing.category.name }} Listing
 {% endblock %}
 
 {% block heading_block %}
@@ -15,8 +15,6 @@
             max-width: 600px;
             margin: 0 auto;
             padding: 30px;
-
-        {#border: 1px solid #ccc;#}{#background-color: white;#}{#box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);#}
         }
 
         .containera h1 {
@@ -55,7 +53,6 @@
             border-radius: 5px;
             cursor: pointer;
             margin-top: 20px;
-        {#width: 100%;#}
         }
 
         .upload-container {

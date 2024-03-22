@@ -5,36 +5,14 @@
     Sign Up
 {% endblock %}
 
-{% block heading_block %}
-    Signup
-{% endblock %}
-
 {% block body_block %}
-    <div>
-        <div id="userdetails">
-            <h2>user details</h2>
-            <div>
-                FORM PLACEHOLDER
-            </div>
-        </div>
-        <div>
-            <h2>personal details</h2>
-            <div>
-                PERSONAL DETAILS PLACEHOLDER
-            </div>
-        </div>
-        <div>
-            <p>Already have an account?</p>
-            <a href="{% url 'techtreasure:user_login' %}">Login</a>
-        </div>
-    </div>
-
-    <h1>Sign </h1>
+    <div class="container text-center">
     {% if registered %}
-        techtreasure says: <strong>thank you for registering!</strong>
-        <a href="{% url 'techtreasure:index' %}">Return to the homepage.</a><br />
+        <h1>Signed Up</h1>
+        You have successfully created an account<br />
+        <a href="{% url 'techtreasure:home' %}">Return to the homepage.</a><br />
     {% else %}
-        techtreasure says: <strong>register here!</strong><br />
+        <h1>Sign Up</h1><br />
         <form id="user_form" method="post" action="{% url 'techtreasure:register' %}"
             enctype="multipart/form-data">
             {% csrf_token %}
@@ -42,8 +20,11 @@
             {{ user_form.as_p }}
             {{ profile_form.as_p }}
             <!-- Provide a button to click to submit the form. -->
+            <p>Already have an account? <a href="{% url 'techtreasure:user_login' %}">Login</a></p>
             <input type="submit" name="submit" value="Register" />
         </form>
+        
     {% endif %}
+    </div>  
 
 {% endblock %}

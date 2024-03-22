@@ -5,16 +5,10 @@
     Make Listing
 {% endblock %}
 
-{% block heading_block %}
-    Create a New Listing
-{% endblock %}
-
 {% block body_block %}
-    <div>
-        <h1>make a new listing</h1>
-        
-
-    <form id="category_form" method="post" action="/techtreasure/add_category/">
+<div class="mx-auto listing-page text-center">
+    <h1>Create a New Listing</h1>
+    <form id="category_form" method="post" action="{% url 'techtreasure:add_listing'%} " enctype="multipart/form-data">
         {% csrf_token %}
         {% for hidden in form.hidden_fields %}
             {{ hidden }}
@@ -22,10 +16,11 @@
         {% for field in form.visible_fields %}
             {{ field.errors }}
             {{ field.help_text }}
-            {{ field }}
+            {{ field.label_tag }} <br /> {{ field }} <br />
         {% endfor %}
-        <input type="submit" name="submit" value="Create Listing " />
+        <br />
+        <input type="submit" name="submit" class="btn btn-primary" value="Create Listing" />
     </form>
-
-    </div>
+    <br />
+</div>
 {% endblock %}

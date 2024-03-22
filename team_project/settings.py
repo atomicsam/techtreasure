@@ -107,7 +107,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LOGIN_URL = 'techtreasure:login'
+LOGIN_URL = 'techtreasure:user_login'
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/

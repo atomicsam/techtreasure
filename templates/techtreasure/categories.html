@@ -10,14 +10,16 @@
     All Categories
 {% endblock %}
 
+{% block extra_block %}
+<a class="text-decoration-none float-end ps-3" href="{% url 'techtreasure:searchlistings' %}">Search Listings</a>
+    {% if user.is_authenticated %}
+        <a class="text-decoration-none float-end" href="{% url 'techtreasure:add_listing' %}">Add a New Listing </a><br />
+    {% endif %}
+{% endblock %}
+
 {% block body_block %}
-    <div> 
-        <a href="{% url 'techtreasure:searchlistings' %}">Search Listings</a>
-        <a href="{% url 'techtreasure:add_listing' %}">Add a New Listing </a><br />
-    </div>
-    <div>
-        {% get_category_list %}
-    </div> 
+    
+    {% get_category_list %}
 
 {% endblock %}
 

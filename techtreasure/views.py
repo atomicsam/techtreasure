@@ -1,17 +1,23 @@
+from itertools import product
 from django.shortcuts import render
 from django.db.models import Count
 from techtreasure.models import Category, Listing, User, Offer
-from techtreasure.forms import CategoryForm
 from django.shortcuts import redirect
 from django.http import HttpResponse
 from datetime import datetime
-from techtreasure.forms import UserForm
+from techtreasure.forms import UserForm, MakeListingForm, MakeOfferForm
 from django.urls import reverse
 from django.contrib.auth import authenticate,login,logout
+from django.contrib.auth.decorators import login_required
+from techtreasure.bing_search import run_query
+from techtreasure.models import Listing
+from django.http import JsonResponse
+
+
 # Create your views here.
 def home(request):
     category_list = Category.objects.annotate(number_of_listings=Count('listing')).order_by('-number_of_listings')[:4]
-    recent_listings = Listing.objects.order_by('-creation_date')[:4]
+    recent_listings = Listing.objects.filter(itemsold=False).order_by('-creation_date')[:4]
     
     context_dict = {}
     context_dict['categories'] = category_list
@@ -50,7 +56,7 @@ def show_category(request, category_name_slug):
 
     try:
         category = Category.objects.get(slug=category_name_slug)
-        listings = Listing.objects.filter(category=category)
+        listings = Listing.objects.filter(category=category, itemsold=False)
         context_dict['listings'] = listings
         context_dict['category'] = category
     except Category.DoesNotExist:
@@ -68,19 +74,34 @@ def show_listing(request, category_name_slug, listing_id):
     try:
         listing = Listing.objects.get(id=listing_id)
         context_dict['listing'] = listing
+        context_dict['offer'] = Offer.objects.filter(listing=listing)
     except Listing.DoesNotExist:
         context_dict['listing'] = None
-
+        context_dict['offer'] = None
+    if request.method == "POST":
+        form = MakeOfferForm(request.POST)
+        if form.is_valid():
+            offer_form = form.save(commit=False)
+            offer_form.offer_date = str(datetime.now())
+            offer_form.users = request.user
+            offer_form.listing_id = listing_id
+            offer_form.save()
+        else:
+            print(form.errors)
+        context_dict['form'] = form
+    else:
+        form = MakeOfferForm()
     if context_dict['listing']==None:
         response = render(request, 'techtreasure/404_page.html')
     else:
         response = render(request, 'techtreasure/listing.html', context=context_dict)
+    
     return response
 
-def show_all_listings(request):
+def all_listings(request):
     context_dict = {}
     try:
-        listing = Listing.objects.get.all()
+        listing = Listing.objects.filter(itemsold=False)
         context_dict['listing'] = listing
     except Listing.DoesNotExist:
         context_dict['listing'] = None
@@ -92,7 +113,7 @@ def show_all_listings(request):
     return response
 
 def register(request):
-    register = False
+    registered = False
     if request.method == 'POST':
         user_form = UserForm(request.POST)
         
@@ -100,18 +121,14 @@ def register(request):
             user = user_form.save()
             user.set_password(user.password)
             user.save()
-        
-            profile.user = user
-            if 'picture' in request.FILES:
-                profile.picture = request.FILES['picture']
 
-            register = True
+            registered = True
         else:
-            print(user_form.errors)
+            print(user_form.non_field_errors)
     else:
         user_form = UserForm()
-       
-    return render(request, 'techtreasure/signup.html', {'user_form': user_form, 'signup': register})
+
+    return render(request, 'techtreasure/signup.html', {'user_form': user_form, 'registered': registered})
 
    
 
@@ -133,22 +150,33 @@ def user_login(request):
         return render(request, 'techtreasure/login.html')
    
 def searchlistings(request):
+    query = request.GET.get('q', '')
+    results = []
+    if query:
+        # Perform the search query
+        results = Listing.objects.filter(name__icontains=query, itemsold=False)
+    return render(request, 'techtreasure/search_results.html', {'query': query, 'results': results})
 
-    context_dict = {}
-    context_dict['boldmessage'] = 'Crunchy, creamy, cookie, candy, cupcake!'
+
     
-    response = render(request, 'techtreasure/searchlistings.html', context=context_dict)
-    return response
 
+@login_required
 def add_listing(request):
-    form = CategoryForm()
     if request.method == 'POST':
-        form = CategoryForm(request.POST)
+        form = MakeListingForm(request.POST)
         if form.is_valid():
-            form.save(commit=True)
+            listing_form = form.save(commit=False)
+            listing_form.users = request.user
+            listing_form.itemsold = False
+            listing_form.creation_date = str(datetime.now())
+            listing_form.picture_field = request.FILES['picture_field']
+
+            listing_form.save()
             return redirect('/techtreasure/')
         else:
             print(form.errors)
+    else:
+        form = MakeListingForm()
     return render(request, 'techtreasure/add_listing.html', {'form': form})
 
 def profile(request):
@@ -168,10 +196,6 @@ def get_server_side_cookie(request, cookie, default_val=None):
     return val
 
 def visitor_cookie_handler(request):
-    # Get the number of visits to the site.
-    # We use the COOKIES.get() function to obtain the visits cookie.
-    # If the cookie exists, the value returned is casted to an integer.
-    # If the cookie doesn't exist, then the default value of 1 is used.
     visits = int(get_server_side_cookie(request, 'visits', '1'))
     
     last_visit_cookie = get_server_side_cookie(request, 'last_visit', str(datetime.now()))
@@ -194,3 +218,63 @@ def visitor_cookie_handler(request):
 
 def show_404(request):
     return render(request, 'techtreasure/404_page.html')
+
+
+
+def search(request):
+    result_list = []
+    if request.method == 'POST':
+        query = request.POST['query'].strip()
+        if query:
+            # Run our Bing function to get the results list!
+            result_list = run_query(query)
+    return render(request, 'techtreasure/search.html', {'result_list': result_list})
+
+@login_required
+def user_logout(request):
+
+    logout(request)
+    # Take the user back to the homepage.
+    return redirect(reverse('techtreasure:home'))
+
+@login_required
+def dashboard_view(request):
+    # Get active listings
+    active_listings = Listing.objects.filter(itemsold=False, users=request.user)
+
+    # Get active offers
+    all_active_listings = Listing.objects.filter(itemsold=False)
+    active_offers = Offer.objects.filter(users=request.user, listing__in=all_active_listings)
+
+    context = {
+        'active_listings': active_listings,
+        'active_offers': active_offers,
+    }
+    return render(request, 'techtreasure/dashboard.html', context)
+
+@login_required
+def settings(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        old_pwd = request.POST.get('old_pwd')
+        new_pwd = request.POST.get('new_pwd')
+        user_obj = User.objects.filter(username=name, password=old_pwd).values("id", "username", "password").first()
+        if user_obj:
+            User.objects.filter(id=user_obj.get("id", None)).update(password=new_pwd)
+            return JsonResponse({"message": "Password updated successfully", "code": 200})
+        else:
+            return JsonResponse({"message": "User does not exist", "code": 400})
+
+    return render(request, 'techtreasure/password_change_form.html')
+
+@login_required
+def history(request):
+     # Get active listings
+    old_listings = Listing.objects.filter(itemsold=True, users=request.user)
+
+    # Get active offers
+    all_sold_listings = Listing.objects.filter(itemsold=True)
+    old_offers = Offer.objects.filter(users=request.user, listing__in=all_sold_listings)
+
+    context = {'listings': old_listings, 'offers': old_offers}
+    return render(request, 'techtreasure/history.html', context)

@@ -1,0 +1,28 @@
+{% extends 'techtreasure/base.html' %}
+{% load static %}
+{% load techtreasure_template_tags %}
+
+{% block title_block %}
+    Dashboard
+{% endblock %}
+
+{% block heading_block %}
+{% endblock %}
+
+{% block extra_block %}
+<h1>Welcome, {{ user.first_name }}</h1>
+    <div class="float-end">
+        
+        <a href="{% url 'techtreasure:settings' %}">Settings</a>
+        <a href="{% url 'techtreasure:history' %}">History</a>
+    </div>
+    
+{% endblock %}
+
+{% block body_block %}
+    <h3>Current Listings</h3>
+    {% get_recent_listings active_listings %}
+    <h3>Current Offers</h3>
+    {% get_offer_listings active_offers %}
+{% endblock %}
+
