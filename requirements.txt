@@ -1,3 +1,10 @@
-Django==2.2
+certifi==2024.2.2
+charset-normalizer==3.3.2
+coverage==7.4.4
+Django==2.2.28
+idna==3.6
+pillow @ file:///C:/b/abs_e22m71t0cb/croot/pillow_1707233126420/work
 pytz==2024.1
+requests==2.31.0
 sqlparse==0.4.4
+urllib3==2.2.1
