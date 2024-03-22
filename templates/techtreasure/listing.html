@@ -12,9 +12,7 @@
             <div class="col-md-4 col-12" style="text-align: center;">
                 <img class="card-img-top mb-5 mb-md-0 rounded" style="max-height: 300px; max-width: 100%; width: auto" src="/media/{{ listing.picture_field }}" alt="Picture of {{ listing.name }}" />
                 {% if user.is_authenticated %}
-                    {% if user.id == listing.users.id %}
-                        
-                    
+                    {% if user.id == listing.users.id and not listing.itemsold %}  
                     <div class="row mx-auto"> 
                         <div class="col-12"> 
                             <div class="card text-center">
@@ -26,7 +24,12 @@
                                         {% if listing.get_offers %}
                                             {% for offer in listing.get_offers %}
                                                 <li class="list-group-item">{{ offer.users.username }}: {{ offer.price }}
-                                                    <button type="submit" class="btn btn-primary">Accept Offer</button></li>
+                                                    <form method="post" action="{% url 'techtreasure:accept_offer' %}">
+                                                        {% csrf_token %}
+                                                        <input type="hidden" name="listing_id" value="{{ listing.id }}">
+                                                        <input type="hidden" name="offer_id" value="{{ offer.id }}">
+                                                        <button type="submit" class="btn btn-primary">Accept Offer</button>
+                                                    </form>
                                             {% endfor %}
                                         {% else %}
                                             No offers yet
@@ -38,7 +41,7 @@
                     </div>
                     {% else %}
                         {% if listing.itemsold %}
-                            No more offers as this item is already sold!
+                            <br/>No more offers as this item is already sold!
                         {% else %}
                         <div class="p-4">
                             <form id="login_form" method="post" action="{% url 'techtreasure:show_listing' listing.category.slug listing.id %}">
@@ -52,8 +55,9 @@
                             </div>
 
                             </form>
-                    </div>
-                    {% endif %}            
+                        </div>
+                        {% endif %}
+                    {% endif %}
                 {% else %}
                     {% if listing.itemsold %}
                         Item has been sold! But login to create your own list and make offers on other items
@@ -66,12 +70,17 @@
                 <h1 class="display-5 fw-bolder">{{ listing.name }}</h1>
                 <div class="fs-5 mb-5">
                     {% if listing.itemsold %}
-                        <b>SOLD</b>
+                        <b>SOLD</b><br/>
+                        <span>Max Offer:</span>
+                        <span>£{{ listing.suggested_price }}</span> <br />
+                    {% else %}
+                        <b>SOLD</b><br/>
+                        <span>Max Offer:</span>
+                        <span>£{{ listing.get_highest_offer }}</span> <br />
                     {% endif %}
-                    <span>Max Offer:</span>
-                    <span>£{{ listing.get_highest_offer }}</span> <br />
+                    
                     {% if listing.location %}
-                        <span>Location: </span>
+                        <span>Location: {{ listing.location }}</span>
                     {% else %}
                         <span>Location: Unknown</span>
                     {% endif %}
@@ -82,3 +91,19 @@
         </div>
     </div>
 {% endblock %}
+
+<script>
+    function DoSomething(){
+      data = False
+      $.ajax({
+                 type: 'POST',
+                 url: 'getuser/',
+                 data: data,
+                 processData: false,
+                 contentType: false,
+                 success: function(json) {
+                     alert(json);
+                 }
+             })
+     }
+ </script>

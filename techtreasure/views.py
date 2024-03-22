@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.db.models import Count
 from techtreasure.models import Category, Listing, User, Offer
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from django.http import HttpResponse
 from datetime import datetime
 from techtreasure.forms import UserForm, MakeListingForm, MakeOfferForm
@@ -11,6 +11,9 @@ from django.contrib.auth.decorators import login_required
 from techtreasure.bing_search import run_query
 from techtreasure.models import Listing
 from django.http import JsonResponse
+from django.views.generic import View
+from django.utils.decorators import method_decorator
+
 
 
 # Create your views here.
@@ -165,7 +168,10 @@ def add_listing(request):
             listing_form.users = request.user
             listing_form.itemsold = False
             listing_form.creation_date = str(datetime.now())
-            listing_form.picture_field = request.FILES['picture_field']
+            try:
+                listing_form.picture_field = request.FILES['picture_field']
+            except:
+                listing_form.picture_field = 'listings/default_listing.jpg'
 
             listing_form.save()
             return redirect('/techtreasure/')
@@ -274,3 +280,42 @@ def history(request):
 
     context = {'listings': old_listings, 'offers': old_offers}
     return render(request, 'techtreasure/history.html', context)
+
+def accept_offer(request):
+    listing_id = request.POST.get('listing_id')
+    offer_id = request.POST.get('offer_id')
+    new_price = Offer.objects.get(id=offer_id).price
+    print(type(new_price))
+    if listing_id:
+        Listing.objects.filter(pk=listing_id).update(itemsold=True, suggested_price=int(new_price))
+    
+    return redirect(reverse('techtreasure:home'))
+
+    offer_id = int(request.POST.get("offer"))
+    offer = Offer.objects.get(id=offer_id)
+    print(offer.listing.itemsold)
+    if request.method == "POST":
+        offer_form = get_object_or_404(Offer, id=offer_id)
+        offer_form.listing.itemsold = True
+        offer_form.listing.suggested_price = offer.price
+        offer_form.save()
+    return redirect(reverse('techtreasure:home'))
+
+# class AcceptOfferView(View):
+#     @method_decorator(login_required)
+#     def get(self, request):
+#         if 'listing_id' in request.POST:
+#             listing_id = request.POST['listing_id']
+#         else:
+#             listing_id = False
+#         try:
+#             listing = Listing.objects.get(id=int(listing_id))
+#         except Listing.DoesNotExist:
+#             return HttpResponse(-1)
+#         except ValueError:
+#             return HttpResponse(-1)
+        
+#         listing.itemsold = True
+#         listing.save()
+        
+#         return HttpResponse(listing.itemsold)

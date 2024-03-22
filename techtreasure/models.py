@@ -21,7 +21,7 @@ class Category(models.Model):
     
 class Listing(models.Model):
     name = models.CharField(max_length=50, null=False)
-    picture_field = models.ImageField(upload_to='listings')
+    picture_field = models.ImageField(upload_to='listings', blank=True, null=True, default="listings/default_image.jpg'")
     suggested_price = models.DecimalField(max_digits=5, decimal_places=2)
     itemsold = models.BooleanField()
     creation_date = models.DateTimeField()
@@ -32,13 +32,12 @@ class Listing(models.Model):
     users = models.ForeignKey(User, on_delete=models.CASCADE, related_name='listings')
 
     def __str__(self):
-        return self.id
+        return self.name
     
     def get_highest_offer(self):
         highest_offers = Offer.objects.filter(listing=self).order_by('-price')
         num_offers = Offer.objects.filter(listing=self).count()
         if num_offers==0:
-            print(self.suggested_price)
             return self.suggested_price
         return highest_offers[0].price
     
@@ -50,6 +49,9 @@ class Offer(models.Model):
     offer_date = models.DateTimeField()
     listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
     users = models.ForeignKey(User, on_delete=models.CASCADE, related_name="offers")
+
+    def __str__(self):
+       return str(self.id) 
 
     
 class UserProfile(models.Model):

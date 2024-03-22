@@ -11,7 +11,7 @@ class MakeListingForm(forms.ModelForm):
     creation_date = forms.DateTimeField(widget=forms.HiddenInput(), initial=str(datetime.now()))
     
     picture_field = forms.ImageField(required=False)
-    suggested_price = forms.DecimalField(max_digits=5, decimal_places=2)
+    suggested_price = forms.DecimalField(max_digits=6, decimal_places=2, help_text="Maximum of 6 digits (inc. decimals)")
 
     num_of_views = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
     location = forms.CharField(required=False)
@@ -43,6 +43,11 @@ class UserForm(forms.ModelForm):
         fields = ('username', 'first_name', 'last_name', 'password')
 
 class MakeOfferForm(forms.ModelForm):
+    class Meta:
+        model = Offer
+        fields = ('price',)
+
+class AcceptOfferForm(forms.ModelForm):
     class Meta:
         model = Offer
         fields = ('price',)
