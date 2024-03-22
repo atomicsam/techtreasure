@@ -71,7 +71,6 @@ def populate():
     # Create and add listings to the database, associating them with categories
     for listing_data in listings:
         cat = Category.objects.get(name=listing_data['category'])
-        print("got cat")
         add_listing(listing_data, cat)
 
 
